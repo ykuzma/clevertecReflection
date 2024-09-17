@@ -1,9 +1,18 @@
 package ru.clevertec.core;
 
-import java.util.Map;
+public abstract class Node {
+    protected NodeType nodeType;
 
-public class Node {
-    private Map<String, Node> fields;
+   public boolean isArray(){
+       return nodeType == NodeType.ARRAY;
+   }
 
+   public boolean isObject() {
+       return nodeType == NodeType.OBJECT;
+   }
+
+   public boolean isValue() {
+       return nodeType == NodeType.VALUE;
+   }
 
 }
