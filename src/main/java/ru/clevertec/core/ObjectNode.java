@@ -1,12 +1,14 @@
 package ru.clevertec.core;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 import java.util.Set;
 
 
+@Getter
+@Setter
 public class ObjectNode extends Node {
 
     private Map<String, Node> fields;
