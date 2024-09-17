@@ -3,6 +3,7 @@ package ru.clevertec.core;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,11 +16,14 @@ public class ObjectNode extends Node {
 
     public ObjectNode() {
         super(NodeType.OBJECT);
+        fields = new LinkedHashMap<>();
     }
 
     public Set<Map.Entry<String, Node>> fields(){
         return fields.entrySet();
     }
+
+
 
 
 }

@@ -11,7 +11,7 @@ public class NodeFactory {
     int countQuote = 0;
 
     public Node parse(char start, char[] json) {
-
+        int index = 0;
         Node node = create(start);
         Node temp = null;
         for (int i = 0; i < json.length; i++){
@@ -19,10 +19,11 @@ public class NodeFactory {
             if(json[i] == '[' || json[i] == '{') {
                 temp = parse(json[i], Arrays.copyOfRange(json, i + 1, json.length) );
             } else if (json[i] == ']' || json[i] == '}') {
-                parseField(node, temp,  Arrays.copyOfRange(json, 0, i));
+                parseField(node, temp,  Arrays.copyOfRange(json, index, i));
                 return node;
             } else if (json[i] == ',' && countQuote == 0) {
-                parseField(node, temp,  Arrays.copyOfRange(json, 0, i));
+                parseField(node, temp,  Arrays.copyOfRange(json, index, i));
+                index = i + 1;
             }
 
         }
@@ -39,7 +40,7 @@ public class NodeFactory {
 
     }
     private void parseFieldWithKey(Node root, Node value, char[] field){
-        String s = Arrays.toString(field);
+        String s = new String(field);
         String[] split = s.split(":");
         String temp = split[0].trim();
         String key = temp.substring(1, temp.length() - 1);
@@ -57,7 +58,7 @@ public class NodeFactory {
     private void parseFieldOnlyValue(Node root, Node value, char[] field){
         if(value == null) {
             ValueNode valueNode = new ValueNode();
-            valueNode.setValue(Arrays.toString(field));
+            valueNode.setValue(new String(field));
             ((ArrayNode) root).getNodes().add(valueNode);
         } else if (root.isArray()) {
             ((ArrayNode) root).getNodes().add(value);
