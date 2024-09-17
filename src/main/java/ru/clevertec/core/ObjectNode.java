@@ -6,10 +6,14 @@ import lombok.NoArgsConstructor;
 import java.util.Map;
 import java.util.Set;
 
-@Data
-@NoArgsConstructor
+
 public class ObjectNode extends Node {
+
     private Map<String, Node> fields;
+
+    public ObjectNode() {
+        super(NodeType.OBJECT);
+    }
 
     public Set<Map.Entry<String, Node>> fields(){
         return fields.entrySet();

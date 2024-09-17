@@ -1,4 +1,11 @@
 package ru.clevertec.core;
 
-public class ArrayNode {
+import java.util.List;
+
+public class ArrayNode extends Node{
+
+    private List<Node> nodes;
+    protected ArrayNode() {
+        super(NodeType.ARRAY);
+    }
 }
