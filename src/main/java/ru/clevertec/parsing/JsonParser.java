@@ -1,7 +1,6 @@
 package ru.clevertec.parsing;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import ru.clevertec.core.ArrayNode;
 import ru.clevertec.core.Node;
@@ -32,9 +31,11 @@ public class JsonParser {
                 addElementInNode(parent, child, Arrays.copyOfRange(json, index, i));
                 offset = i;
                 return parent;
-            } else if (json[i] == ',' && countQuote == 0) {
+            } else if (json[i] == ',' && countQuote % 2 == 0) {
                 addElementInNode(parent, child, Arrays.copyOfRange(json, index, i));
                 index = i + 1;
+            } else if (json[i] == '"') {
+                countQuote++;
             }
         }
         return parent;
