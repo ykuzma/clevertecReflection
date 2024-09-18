@@ -11,7 +11,7 @@ import java.util.List;
 public class ArrayNode extends Node{
 
     private List<Node> nodes = new ArrayList<>();
-    protected ArrayNode() {
+    public ArrayNode() {
         super(NodeType.ARRAY);
     }
 
