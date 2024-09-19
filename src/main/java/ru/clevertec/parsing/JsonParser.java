@@ -34,7 +34,8 @@ public class JsonParser {
             } else if (json[i] == ',' && countQuote % 2 == 0) {
                 addElementInNode(parent, child, Arrays.copyOfRange(json, index, i));
                 index = i + 1;
-            } else if (json[i] == '"') {
+            } else if (json[i] == '"' && (i == 0 ||String.valueOf(json).codePointBefore(i) != '\\')) {
+
                 countQuote++;
             }
         }
