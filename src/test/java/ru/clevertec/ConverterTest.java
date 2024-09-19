@@ -2,14 +2,19 @@ package ru.clevertec;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import ru.clevertec.core.ObjectConverter;
 import ru.clevertec.domain.Flower;
+import ru.clevertec.domain.UuidFlower;
 import ru.clevertec.factory.NodeFactory;
 import ru.clevertec.parsing.JsonParser;
 import ru.clevertec.util.TestHelper;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,15 +29,23 @@ class ConverterTest {
         objectMapper = new ObjectMapper();
     }
 
-    @Test
-    void mappingJsonToDomain() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    @ParameterizedTest
+    @MethodSource
+    void mappingJsonToDomain(Class<?> clazz, String json) throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         //given
-        String json = helper.getJsonAsString();
-        Flower expectedFlower = objectMapper.readValue(json, Flower.class);
+
+
         //when
-        Flower actualFlower = converter.mappingJsonToDomain(json, Flower.class);
+
         //then
-        assertThat(actualFlower).isEqualTo(expectedFlower);
+        assertThat(converter.mappingJsonToDomain(json, clazz)).isEqualTo(objectMapper.readValue(json, clazz));
+    }
+
+    public static Stream<Arguments> mappingJsonToDomain() throws IOException {
+      return Stream.of(
+              Arguments.of(Flower.class, new TestHelper().getFlowersJsonAsString()),
+              Arguments.of(UuidFlower.class, new TestHelper().getUuidJsonAsString())
+      );
     }
 }
