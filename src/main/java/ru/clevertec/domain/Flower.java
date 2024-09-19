@@ -1,5 +1,7 @@
 package ru.clevertec.domain;
 
+import java.util.Objects;
+
 public class Flower {
 
     private int id;
@@ -10,6 +12,8 @@ public class Flower {
     public int getId() {
         return id;
     }
+
+
 
     public void setId(int id) {
         this.id = id;
@@ -37,5 +41,18 @@ public class Flower {
 
     public void setShadePreferred(boolean shadePreferred) {
         this.shadePreferred = shadePreferred;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flower flower = (Flower) o;
+        return id == flower.id && shadePreferred == flower.shadePreferred && Objects.equals(commonName, flower.commonName) && Objects.equals(family, flower.family);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, commonName, family, shadePreferred);
     }
 }
