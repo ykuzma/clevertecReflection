@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import ru.clevertec.core.ArrayNode;
 import ru.clevertec.core.Node;
-import ru.clevertec.core.NodeFactory;
+import ru.clevertec.factory.NodeFactory;
 import ru.clevertec.core.ObjectNode;
 import ru.clevertec.core.ValueNode;
 

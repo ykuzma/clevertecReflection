@@ -1,4 +1,8 @@
-package ru.clevertec.core;
+package ru.clevertec.factory;
+
+import ru.clevertec.core.ArrayNode;
+import ru.clevertec.core.Node;
+import ru.clevertec.core.ObjectNode;
 
 public class NodeFactory {
 
@@ -7,7 +11,7 @@ public class NodeFactory {
         return switch (bit) {
             case '{' -> new ObjectNode();
             case '[' -> new ArrayNode();
-            default -> new ValueNode();
+            default -> throw new RuntimeException();
         };
     }
 }

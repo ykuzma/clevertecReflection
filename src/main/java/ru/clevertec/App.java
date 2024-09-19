@@ -1,7 +1,7 @@
 package ru.clevertec;
 
 import ru.clevertec.core.Node;
-import ru.clevertec.core.NodeFactory;
+import ru.clevertec.factory.NodeFactory;
 import ru.clevertec.core.ObjectConverter;
 import ru.clevertec.domain.Flower;
 import ru.clevertec.parsing.JsonParser;
@@ -17,6 +17,13 @@ public class App {
             NoSuchMethodException,
             InstantiationException,
             IllegalAccessException {
+
+        String hello = "hello";
+
+        char c = hello.charAt(0);
+        int i = hello.codePointAt(0);
+        System.out.println(c == i);
+
 
         String filePath = "src/main/resources/1.json";
         String json = null;
@@ -45,6 +52,10 @@ public class App {
         Flower convert = converter.convert(parse, Flower.class);
 
         System.out.println(parse);
+
+
+
+
 
     }
 }
