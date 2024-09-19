@@ -52,7 +52,7 @@ public class JsonParser {
     private void addElementInArrayNode(Node parent, Node child, char[] field) {
         if (child == null) {
             ValueNode valueNode = new ValueNode();
-            valueNode.setValue(new String(field));
+            valueNode.setValueAsString(new String(field));
             ((ArrayNode) parent).getNodes().add(valueNode);
         } else{
             ((ArrayNode) parent).getNodes().add(child);
@@ -68,7 +68,7 @@ public class JsonParser {
         if (child == null) {
 
             ValueNode valueNode = new ValueNode();
-            valueNode.setValue(split[1]);
+            valueNode.setValueAsString(split[1]);
             ((ObjectNode) parent).getFields().put(key, valueNode);
         } else if (parent.isObject()) {
             ((ObjectNode) parent).getFields().put(key, child);
