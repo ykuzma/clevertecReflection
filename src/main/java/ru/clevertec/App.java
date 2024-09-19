@@ -46,12 +46,11 @@ public class App {
                 "}";
 
         JsonParser nf = new JsonParser(new NodeFactory());
-        String substring = json.substring(1);
-        Node parse = nf.parse(json.charAt(0), substring.toCharArray());
-        ObjectConverter converter = new ObjectConverter();
-        Flower convert = converter.convert(parse, Flower.class);
 
-        System.out.println(parse);
+        Converter converter = new Converter(nf, new ObjectConverter());
+        Flower convert = converter.mappingJsonToDomain(json, Flower.class);
+
+        System.out.println(convert);
 
 
 

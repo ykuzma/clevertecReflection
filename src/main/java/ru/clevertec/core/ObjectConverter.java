@@ -18,15 +18,14 @@ public class ObjectConverter {
         if(node.isObject()) {
             ObjectNode objectNode = (ObjectNode) node;
             Map<String, Node> nodeFields = objectNode.getFields();
-            for (Map.Entry<String, Node> name: nodeFields.entrySet()) {
-                String key = name.getKey();
+            for (Map.Entry<String, Node> fieldNode: nodeFields.entrySet()) {
+                String key = fieldNode.getKey();
                 Field field = Arrays.stream(fields)
                         .filter(f ->  f.getName().equals(key))
                         .findFirst()
                         .orElseThrow();
                 field.setAccessible(true);
-
-                Node value = name.getValue();
+                Node value = fieldNode.getValue();
                 if(value.isValue()) {
                     field.set(t, ((ValueNode) value).getValue());
                 }
