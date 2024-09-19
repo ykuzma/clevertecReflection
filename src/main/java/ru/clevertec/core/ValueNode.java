@@ -27,9 +27,9 @@ public class ValueNode extends Node {
             return Boolean.parseBoolean(value);
         } else if (value.equals("null")) {
             return null;
-        } else if (value.matches("-?\\d")) {
+        } else if (value.matches("-?\\d+")) {
             return Integer.parseInt(value);
-        } else if (value.matches("-{0,1}\\d(\\.\\d)")) {
+        } else if (value.matches("-{0,1}\\d+\\.\\d+")) {
             return Double.parseDouble(value);
         }
         throw new IllegalArgumentException();
