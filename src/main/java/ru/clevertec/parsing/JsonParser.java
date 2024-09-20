@@ -63,7 +63,7 @@ public class JsonParser {
 
     private void addElementInObjectNode(Node parent, Node child, char[] field) {
         String s = new String(field);
-        String[] split = s.split(":");
+        String[] split = s.split(":",2);
         String temp = split[0].trim();
         String key = temp.substring(1, temp.length() - 1);
         if (child == null) {

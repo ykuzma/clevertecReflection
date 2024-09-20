@@ -3,9 +3,9 @@ package ru.clevertec.core;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 public class ObjectConverter {
@@ -57,6 +57,8 @@ public class ObjectConverter {
         } else if (field.getType().equals(UUID.class)) {
 
             return UUID.fromString(value.substring(1, value.length() - 1));
+        } else if (field.getType().equals(OffsetDateTime.class)) {
+            return OffsetDateTime.parse(value.substring(1, value.length() - 1));
         }
         throw new IllegalArgumentException();
     }
