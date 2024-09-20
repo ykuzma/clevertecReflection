@@ -1,0 +1,13 @@
+{"id":2,
+  "flower":{
+  "id": 5,
+  "commonName": "H,G",
+  "family": "S",
+  "shadePreferred": false,
+  "price": 3.12
+},
+  "time":{
+    "offsetDateTime": "2007-12-03T10:15:30+01:00"},
+"uuid": {
+  "id":"662f158b-bf08-49fa-9486-d44bfee1ce3a"
+}}

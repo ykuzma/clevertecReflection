@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.clevertec.core.ObjectConverter;
 import ru.clevertec.domain.Flower;
+import ru.clevertec.domain.InnerObjectsFlower;
 import ru.clevertec.domain.TimeFlower;
 import ru.clevertec.domain.UuidFlower;
 import ru.clevertec.factory.NodeFactory;
@@ -39,12 +40,12 @@ class ConverterTest {
     void mappingJsonToDomain(Class<?> clazz, String json) throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         //given
-
+        Object o1 = objectMapper.readValue(json, clazz);
 
         //when
-
+        Object o = converter.mappingJsonToDomain(json, clazz);
         //then
-        assertThat(converter.mappingJsonToDomain(json, clazz)).isEqualTo(objectMapper.readValue(json, clazz));
+        assertThat(o).isEqualTo(o1);
     }
 
     public static Stream<Arguments> mappingJsonToDomain() throws IOException {
@@ -65,5 +66,17 @@ class ConverterTest {
         TimeFlower timeFlowerActual = converter.mappingJsonToDomain(helper.getTimeJsonAsString(), TimeFlower.class);
         //then
         assertThat(timeFlowerActual).isEqualTo(timeFlowerExpected);
+    }
+
+    @Test
+    void mappingJsonToInnerFlower() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
+        //given
+        InnerObjectsFlower innerFlowerExpected = objectMapper.readValue(helper.getInnerJsonAsString(), InnerObjectsFlower.class);
+
+        //when
+        InnerObjectsFlower innerFlowerActual = converter.mappingJsonToDomain(helper.getInnerJsonAsString(), InnerObjectsFlower.class);
+        //then
+        assertThat(innerFlowerActual).isEqualTo(innerFlowerExpected);
     }
 }
