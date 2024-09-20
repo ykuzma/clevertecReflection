@@ -33,6 +33,9 @@ public class ObjectConverter {
                 if (value.isValue()) {
                     Object valueNode = parse(((ValueNode) value).getValue(), field);
                     field.set(t, valueNode);
+                }else{
+
+                    field.set(t, convert(value, field.getType()));
                 }
             }
         }
