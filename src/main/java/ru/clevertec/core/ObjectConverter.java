@@ -11,7 +11,6 @@ import java.util.UUID;
 
 public class ObjectConverter {
 
-    int i;
 
     public <T> T convert(Node node, Class<T> object) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 

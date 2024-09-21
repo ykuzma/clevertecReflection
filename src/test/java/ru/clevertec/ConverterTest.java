@@ -1,13 +1,16 @@
 package ru.clevertec;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.clevertec.core.AbstractContainer;
+import ru.clevertec.core.JsonConverter;
 import ru.clevertec.core.ObjectConverter;
 import ru.clevertec.domain.Flower;
 import ru.clevertec.domain.InnerObjectsFlower;
@@ -19,7 +22,6 @@ import ru.clevertec.util.TestHelper;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -31,7 +33,7 @@ class ConverterTest {
     Converter converter;
 
     public ConverterTest() {
-        converter = new Converter(new JsonParser(new NodeFactory()), new ObjectConverter());
+        converter = new Converter(new JsonParser(new NodeFactory()), new ObjectConverter(), new JsonConverter(new StringBuilder()));
         helper = new TestHelper();
         objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules()
@@ -97,5 +99,20 @@ class ConverterTest {
         Set<UuidFlower> actual = converter.mappingJsonToDomain(helper.getListAsString(), container);
         //then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void mappingObject() throws IllegalAccessException, JsonProcessingException {
+
+        //given
+        EasyRandom easyRandom = new EasyRandom();
+        UuidFlower uuidFlower = easyRandom.nextObject(UuidFlower.class);
+        String s1 = objectMapper.writeValueAsString(uuidFlower);
+
+        //when
+        String s = converter.mappingDomainToJson(uuidFlower);
+
+        //then
+        assertThat(s).isEqualTo(s1);
     }
 }
