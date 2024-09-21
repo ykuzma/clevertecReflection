@@ -3,11 +3,7 @@ package ru.clevertec.core;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +34,12 @@ public class ObjectConverter {
                 if (value.isValue()) {
                     Object valueNode = parse(((ValueNode) value).getValue(), field);
                     field.set(t, valueNode);
-                }else{
+                } else {
 
                     field.set(t, convert(value, field.getType()));
                 }
             }
-        }else {
+        } else {
             ArrayNode arrayNode = (ArrayNode) node;
             List<Node> nodes = arrayNode.getNodes();
 
@@ -53,29 +49,22 @@ public class ObjectConverter {
     }
 
     public <T> T convert(Node node, ContainerData<T> containerData) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-        Class<T> clazz = containerData.getClazz();
-        Class<?> implementation = getImplementation(clazz);
-        T list = (T) implementation.getConstructor().newInstance();
-        Method add = implementation.getMethod("add", Object.class);
-        for (Node n: ((ArrayNode)node).getNodes()) {
-            if(n.isObject()) {
-                add.invoke(list, convert(n, (Class)containerData.getType()));
+        Class<T> clazz = containerData.getContainerClass();
+        Class<?> implementation = containerData.getContainerClassImpl();
+        T list = clazz.cast(implementation.getConstructor().newInstance());
+
+        for (Node n : ((ArrayNode) node).getNodes()) {
+            if (n.isObject()) {
+                containerData.getAddInContainer().invoke(list,
+                        convert(n, (Class) containerData.getTypeElementContainer()));
             }
         }
         return list;
     }
 
 
-    private Class<?> getImplementation(Class<?> clazz) {
-        if(clazz.equals(List.class)) {
-            return ArrayList.class;
-        }
-        return null;
-    }
-
-
     private Object parse(String value, Field field) {
-        value  = value.trim();
+        value = value.trim();
 
         if (field.getType().equals(String.class)) {
             return value.substring(1, value.length() - 1);

@@ -20,6 +20,7 @@ import ru.clevertec.util.TestHelper;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -87,13 +88,13 @@ class ConverterTest {
     void mappingJson() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
         //given
-        List<UuidFlower> expected = objectMapper.readValue(helper.getListAsString(),
+        Set<UuidFlower> expected = objectMapper.readValue(helper.getListAsString(),
                 new TypeReference<>() {
                 });
-        AbstractContainer<List<UuidFlower>> container = new AbstractContainer<>() {
+        AbstractContainer<Set<UuidFlower>> container = new AbstractContainer<>() {
         };
         //when
-        List<UuidFlower> actual = converter.mappingJsonToDomain(helper.getListAsString(), container);
+        Set<UuidFlower> actual = converter.mappingJsonToDomain(helper.getListAsString(), container);
         //then
         assertThat(actual).isEqualTo(expected);
     }
