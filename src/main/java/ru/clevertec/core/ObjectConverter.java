@@ -3,8 +3,13 @@ package ru.clevertec.core;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -12,7 +17,7 @@ public class ObjectConverter {
 
     int i;
 
-    public <T> T convert(Node node, Class<T> object) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public <T> T convert(Node node, Class<T> object) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
         Constructor<T> constructor = object.getConstructor();
 
@@ -38,9 +43,34 @@ public class ObjectConverter {
                     field.set(t, convert(value, field.getType()));
                 }
             }
+        }else {
+            ArrayNode arrayNode = (ArrayNode) node;
+            List<Node> nodes = arrayNode.getNodes();
+
         }
 
         return t;
+    }
+
+    public <T> T convert(Node node, ContainerData<T> containerData) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+        Class<T> clazz = containerData.getClazz();
+        Class<?> implementation = getImplementation(clazz);
+        T list = (T) implementation.getConstructor().newInstance();
+        Method add = implementation.getMethod("add", Object.class);
+        for (Node n: ((ArrayNode)node).getNodes()) {
+            if(n.isObject()) {
+                add.invoke(list, convert(n, (Class)containerData.getType()));
+            }
+        }
+        return list;
+    }
+
+
+    private Class<?> getImplementation(Class<?> clazz) {
+        if(clazz.equals(List.class)) {
+            return ArrayList.class;
+        }
+        return null;
     }
 
 
