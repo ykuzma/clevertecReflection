@@ -3,6 +3,7 @@ package ru.clevertec.util;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class TestHelper {
 
@@ -10,6 +11,7 @@ public class TestHelper {
     private final String UUID_PATH = "src/test/resources/Uuid.json";
     private final String TIME_PATH = "src/test/resources/time.json";
     private final String INNER_PATH = "src/test/resources/innerObjects.json";
+    private final String LIST_PATH = "src/test/resources/List.json";
 
     public String getFlowersJsonAsString() throws IOException {
         String json;
@@ -26,6 +28,18 @@ public class TestHelper {
     public String getUuidJsonAsString() throws IOException {
         String json;
         try (BufferedReader br = new BufferedReader(new FileReader(UUID_PATH))) {
+            StringBuilder sb = new StringBuilder();
+            while (br.ready()){
+                sb.append(br.readLine());
+            }
+            json = sb.toString();
+        }
+        return json;
+    }
+
+    public String getListAsString() throws IOException {
+        String json;
+        try (BufferedReader br = new BufferedReader(new FileReader(LIST_PATH))) {
             StringBuilder sb = new StringBuilder();
             while (br.ready()){
                 sb.append(br.readLine());
