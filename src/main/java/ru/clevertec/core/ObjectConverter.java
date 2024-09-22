@@ -3,6 +3,8 @@ package ru.clevertec.core;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -33,9 +35,20 @@ public class ObjectConverter {
                 if (value.isValue()) {
                     Object valueNode = parse(((ValueNode) value).getValue(), field.getType());
                     field.set(t, valueNode);
-                } else {
+                } else if (value.isObject() && !field.getType().equals(Map.class)) {
 
                     field.set(t, convert(value, field.getType()));
+                } else {
+                    Class<?> type = field.getType();
+                    Type genericType = field.getGenericType();
+                    ParameterizedType parameterizedType = (ParameterizedType) genericType;
+                    Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+                    ContainerData<T> containerData = new ContainerBuilder<T>()
+                            .setContainerClass((Class<T>) type)
+                            .setTypeElementInContainer(actualTypeArguments)
+                            .build();
+
+                    field.set(t, convert(value, containerData));
                 }
             }
         } else {
@@ -56,21 +69,24 @@ public class ObjectConverter {
             for (Node n : ((ArrayNode) node).getNodes()) {
                 if (n.isObject()) {
                     containerData.getAddInContainer().invoke(list,
-                            convert(n, (Class) containerData.getTypeElementContainer()[0]));
+                            convert(n, (Class<?>) containerData.getTypeElementInContainer()[0]));
+                } else if (n.isValue()) {
+                    containerData.getAddInContainer().invoke(list,
+                           parse(((ValueNode)n).getValue(), (Class<?>) containerData.getTypeElementInContainer()[0]));
                 }
             }
-        }else {
+        } else {
             for (Map.Entry<String, Node> n : ((ObjectNode) node).getFields().entrySet()) {
                 String key = n.getKey();
                 Node value = n.getValue();
                 if (value.isObject()) {
                     containerData.getAddInContainer().invoke(list,
-                            parse(key, (Class<?>) containerData.getTypeElementContainer()[0]),
-                            convert(value,  (Class<?>) containerData.getTypeElementContainer()[1]));
+                            parse(key, (Class<?>) containerData.getTypeElementInContainer()[0]),
+                            convert(value, (Class<?>) containerData.getTypeElementInContainer()[1]));
                 } else if (value.isValue()) {
                     containerData.getAddInContainer().invoke(list,
-                            parse(key, (Class<?>) containerData.getTypeElementContainer()[0]),
-                            parse(((ValueNode)value).getValue(),  (Class<?>) containerData.getTypeElementContainer()[1]));
+                            parse(key, (Class<?>) containerData.getTypeElementInContainer()[0]),
+                            parse(((ValueNode) value).getValue(), (Class<?>) containerData.getTypeElementInContainer()[1]));
                 }
             }
         }
@@ -83,7 +99,7 @@ public class ObjectConverter {
 
         if (clazz.equals(String.class)) {
             return value;
-        } else if (clazz.equals(boolean.class)) {
+        } else if (clazz.equals(boolean.class) || clazz.equals(Boolean.class)) {
             return Boolean.parseBoolean(value);
         } else if (value.equals("null")) {
             return null;

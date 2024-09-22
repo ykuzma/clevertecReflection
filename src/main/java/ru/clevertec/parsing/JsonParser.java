@@ -53,7 +53,11 @@ public class JsonParser {
     private void addElementInArrayNode(Node parent, Node child, char[] field) {
         if (child == null) {
             ValueNode valueNode = new ValueNode();
-            valueNode.setValue(new String(field));
+            String value = String.valueOf(field).trim();
+            if(value.matches("^\".*\"$")) {
+                value = value.substring(1, value.length() - 1);
+            }
+            valueNode.setValue(value);
             ((ArrayNode) parent).getNodes().add(valueNode);
         } else{
             ((ArrayNode) parent).getNodes().add(child);
