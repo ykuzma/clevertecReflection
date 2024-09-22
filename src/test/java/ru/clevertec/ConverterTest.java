@@ -22,7 +22,9 @@ import ru.clevertec.util.TestHelper;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -114,5 +116,19 @@ class ConverterTest {
 
         //then
         assertThat(s).isEqualTo(s1);
+    }
+
+    @Test
+    void mappingMap() throws IllegalAccessException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+        //given
+        Map<String, UUID> expected = objectMapper.readValue(helper.getMapJsonAsString(),
+                new TypeReference<>() {
+                });
+        AbstractContainer<Map<String, UUID>> container = new AbstractContainer<>() {
+        };
+        //when
+        Map<String, UUID> actual = converter.mappingJsonToDomain(helper.getMapJsonAsString(), container);
+        //then
+        assertThat(actual).isEqualTo(expected);
     }
 }

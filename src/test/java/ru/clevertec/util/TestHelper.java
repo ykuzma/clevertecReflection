@@ -12,10 +12,22 @@ public class TestHelper {
     private final String TIME_PATH = "src/test/resources/time.json";
     private final String INNER_PATH = "src/test/resources/innerObjects.json";
     private final String LIST_PATH = "src/test/resources/List.json";
+    private final String MAP_PATH = "src/test/resources/Map.json";
 
     public String getFlowersJsonAsString() throws IOException {
         String json;
         try (BufferedReader br = new BufferedReader(new FileReader(FLOWERS_PATH))) {
+            StringBuilder sb = new StringBuilder();
+            while (br.ready()){
+                sb.append(br.readLine());
+            }
+            json = sb.toString();
+        }
+        return json;
+    }
+    public String getMapJsonAsString() throws IOException {
+        String json;
+        try (BufferedReader br = new BufferedReader(new FileReader(MAP_PATH))) {
             StringBuilder sb = new StringBuilder();
             while (br.ready()){
                 sb.append(br.readLine());
