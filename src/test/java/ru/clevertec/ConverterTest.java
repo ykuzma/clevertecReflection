@@ -14,6 +14,7 @@ import ru.clevertec.core.JsonConverter;
 import ru.clevertec.core.ObjectConverter;
 import ru.clevertec.domain.Flower;
 import ru.clevertec.domain.InnerObjectsFlower;
+import ru.clevertec.domain.InnerObjectsWithMapAndList;
 import ru.clevertec.domain.TimeFlower;
 import ru.clevertec.domain.UuidFlower;
 import ru.clevertec.factory.NodeFactory;
@@ -124,10 +125,20 @@ class ConverterTest {
         Map<String, UUID> expected = objectMapper.readValue(helper.getMapJsonAsString(),
                 new TypeReference<>() {
                 });
-        AbstractContainer<Map<String, UUID>> container = new AbstractContainer<>() {
-        };
+        AbstractContainer<Map<String, UUID>> container = new AbstractContainer<>() {};
         //when
         Map<String, UUID> actual = converter.mappingJsonToDomain(helper.getMapJsonAsString(), container);
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void mappingInnerMap() throws IllegalAccessException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+        //given
+        InnerObjectsWithMapAndList expected = objectMapper.readValue(helper.getInnerMapAsString(), InnerObjectsWithMapAndList.class);
+
+        //when
+        InnerObjectsWithMapAndList actual = converter.mappingJsonToDomain(helper.getInnerMapAsString(), InnerObjectsWithMapAndList.class);
         //then
         assertThat(actual).isEqualTo(expected);
     }

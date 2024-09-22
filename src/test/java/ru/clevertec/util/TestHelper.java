@@ -13,10 +13,23 @@ public class TestHelper {
     private final String INNER_PATH = "src/test/resources/innerObjects.json";
     private final String LIST_PATH = "src/test/resources/List.json";
     private final String MAP_PATH = "src/test/resources/Map.json";
+    private final String INNER_MAP_PATH = "src/test/resources/InnerMapAndList.json";
 
     public String getFlowersJsonAsString() throws IOException {
         String json;
         try (BufferedReader br = new BufferedReader(new FileReader(FLOWERS_PATH))) {
+            StringBuilder sb = new StringBuilder();
+            while (br.ready()){
+                sb.append(br.readLine());
+            }
+            json = sb.toString();
+        }
+        return json;
+    }
+
+    public String getInnerMapAsString() throws IOException {
+        String json;
+        try (BufferedReader br = new BufferedReader(new FileReader(INNER_MAP_PATH))) {
             StringBuilder sb = new StringBuilder();
             while (br.ready()){
                 sb.append(br.readLine());
