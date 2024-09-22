@@ -5,38 +5,47 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 public class ConverterFactory {
     private ConverterObject converterObject;
     private ConverterObjectAsString converterObjectAsString;
+    private ConverterCollection converterCollection;
+    private ConverterObjectWithoutQuotes withoutQuotes;
 
 
-    private static final List<Class<?>> CLASS_AS_STRING = Arrays.asList(new Class[]{String.class, UUID.class,
+    private static final List<Class<?>> CLASS_WITH_QUOTES = List.of(String.class, UUID.class,
             OffsetDateTime.class, LocalDate.class, LocalDateTime.class,
-            BigDecimal.class, BigInteger.class, Integer.class, Double.class, Long.class,
-            Float.class, Boolean.class});
+            BigDecimal.class, BigInteger.class);
+    private static final List<Class<?>> CLASS_WITHOUT_QUOTES = List.of(Integer.class, Double.class, Long.class,
+            Float.class, Boolean.class);
+    public ConverterToJson getConverter(Object object) {
+        if (object instanceof Map) {
 
-    public ConverterToJson getConverter(Class<?> clazz) {
-        if (clazz.equals(Map.class)) {
+        } else if (object instanceof Collection<?>) {
+            return getConverterCollection();
+        } else if (object.getClass().isPrimitive()
+            || CLASS_WITHOUT_QUOTES.stream()
+                .anyMatch(aClass -> aClass.equals(object.getClass()))) {
 
-        } else if (clazz.isArray()
-                || clazz.equals(List.class)
-                || clazz.equals(Set.class)) {
-
-        } else if (clazz.isPrimitive()
-            || CLASS_AS_STRING.stream()
-                .anyMatch(aClass -> aClass.equals(clazz))) {
-
+            return getWithoutQuotes();
+        } else if (CLASS_WITH_QUOTES.stream()
+                .anyMatch(aClass -> aClass.equals(object.getClass()))) {
             return getConverterObjectAsString();
-        }else{
-            return getConverterObject();
         }
-        return null;
+     return getConverterObject();
+    }
+
+    private ConverterObjectWithoutQuotes getWithoutQuotes(){
+        if(withoutQuotes == null) withoutQuotes = new ConverterObjectWithoutQuotes();
+        return withoutQuotes;
+    }
+    private ConverterCollection getConverterCollection(){
+        if(converterCollection == null) converterCollection = new ConverterCollection(this);
+        return converterCollection;
     }
 
     private ConverterObject getConverterObject() {

@@ -12,7 +12,7 @@ public class JsonConverter {
     private final ConverterFactory converterFactory;
 
     public String convertToString(Object object) throws IllegalAccessException {
-        ConverterToJson converter = converterFactory.getConverter(object.getClass());
+        ConverterToJson converter = converterFactory.getConverter(object);
         StringBuilder builder = converter.convertToJson(object);
         return builder.toString();
     }

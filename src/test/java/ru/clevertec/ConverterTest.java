@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,6 +26,8 @@ import ru.clevertec.util.TestHelper;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -42,6 +45,7 @@ class ConverterTest {
         helper = new TestHelper();
         objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules()
+                .setDateFormat(new StdDateFormat())
                 .disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
 
     }
@@ -143,6 +147,39 @@ class ConverterTest {
 
         //when
         String s = converter.mappingDomainToJson(uuidFlower);
+
+        //then
+        assertThat(s).isEqualTo(s1);
+    }
+
+    @Test
+    void mappingDifficultObject() throws IllegalAccessException, JsonProcessingException {
+
+        //given
+        EasyRandom easyRandom = new EasyRandom();
+        InnerObjectsWithMapAndList innerObjectsWithMapAndList = easyRandom.nextObject(InnerObjectsWithMapAndList.class);
+        String s1 = objectMapper.writeValueAsString(innerObjectsWithMapAndList);
+
+        //when
+        String s = converter.mappingDomainToJson(innerObjectsWithMapAndList);
+
+        //then
+        assertThat(s).isEqualTo(s1);
+    }
+
+    @Test
+    void mappingList() throws IllegalAccessException, JsonProcessingException {
+
+        //given
+        EasyRandom easyRandom = new EasyRandom();
+        List<InnerObjectsFlower> flowers = List.of(easyRandom.nextObject(InnerObjectsFlower.class),
+                easyRandom.nextObject(InnerObjectsFlower.class));
+
+
+        String s1 = objectMapper.writeValueAsString(flowers);
+
+        //when
+        String s = converter.mappingDomainToJson(flowers);
 
         //then
         assertThat(s).isEqualTo(s1);

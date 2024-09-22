@@ -19,7 +19,7 @@ public class ConverterObject implements ConverterToJson{
             field.setAccessible(true);
             String name = field.getName();
             Object cast = field.get(object);
-            ConverterToJson converter = factory.getConverter(field.getType());
+            ConverterToJson converter = factory.getConverter(cast);
             StringBuilder value = converter.convertToJson(cast);
             sb.append(fieldNAmeToStringBuilder(name))
                     .append(':')
