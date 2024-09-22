@@ -19,6 +19,7 @@ import ru.clevertec.domain.TimeFlower;
 import ru.clevertec.domain.UuidFlower;
 import ru.clevertec.factory.NodeFactory;
 import ru.clevertec.parsing.JsonParser;
+import ru.clevertec.util.StringCleanerImpl;
 import ru.clevertec.util.TestHelper;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ class ConverterTest {
     Converter converter;
 
     public ConverterTest() {
-        converter = new Converter(new JsonParser(new NodeFactory()), new ObjectConverter(), new JsonConverter(new StringBuilder()));
+        converter = new Converter(new JsonParser(new StringCleanerImpl(),new NodeFactory()), new ObjectConverter(), new JsonConverter(new StringBuilder()));
         helper = new TestHelper();
         objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules()

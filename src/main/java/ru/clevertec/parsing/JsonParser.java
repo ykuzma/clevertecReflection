@@ -7,6 +7,7 @@ import ru.clevertec.core.Node;
 import ru.clevertec.factory.NodeFactory;
 import ru.clevertec.core.ObjectNode;
 import ru.clevertec.core.ValueNode;
+import ru.clevertec.util.StringCleaner;
 
 import java.util.Arrays;
 
@@ -14,6 +15,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class JsonParser {
 
+    private final StringCleaner stringCleaner;
     private final NodeFactory nodeFactory;
     private int countQuote = 0;
     private int offset = 0;
@@ -53,11 +55,8 @@ public class JsonParser {
     private void addElementInArrayNode(Node parent, Node child, char[] field) {
         if (child == null) {
             ValueNode valueNode = new ValueNode();
-            String value = String.valueOf(field).trim();
-            if(value.matches("^\".*\"$")) {
-                value = value.substring(1, value.length() - 1);
-            }
-            valueNode.setValue(value);
+
+            valueNode.setValue(stringCleaner.clean(String.valueOf(field)));
             ((ArrayNode) parent).getNodes().add(valueNode);
         } else{
             ((ArrayNode) parent).getNodes().add(child);
@@ -68,15 +67,12 @@ public class JsonParser {
     private void addElementInObjectNode(Node parent, Node child, char[] field) {
         String s = new String(field);
         String[] split = s.split(":",2);
-        String temp = split[0].trim();
-        String key = temp.substring(1, temp.length() - 1);
+
+        String key = stringCleaner.clean(split[0]);
         if (child == null) {
-            String value = split[1].trim();
-            if(value.matches("^\".*\"$")) {
-                value = value.substring(1, value.length() - 1);
-            }
+
             ValueNode valueNode = new ValueNode();
-            valueNode.setValue(value);
+            valueNode.setValue(stringCleaner.clean(split[1]));
             ((ObjectNode) parent).getFields().put(key, valueNode);
         } else if (parent.isObject()) {
             ((ObjectNode) parent).getFields().put(key, child);
