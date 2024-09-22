@@ -67,9 +67,12 @@ public class JsonParser {
         String temp = split[0].trim();
         String key = temp.substring(1, temp.length() - 1);
         if (child == null) {
-
+            String value = split[1].trim();
+            if(value.matches("^\".*\"$")) {
+                value = value.substring(1, value.length() - 1);
+            }
             ValueNode valueNode = new ValueNode();
-            valueNode.setValue(split[1]);
+            valueNode.setValue(value);
             ((ObjectNode) parent).getFields().put(key, valueNode);
         } else if (parent.isObject()) {
             ((ObjectNode) parent).getFields().put(key, child);

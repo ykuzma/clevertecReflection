@@ -31,7 +31,7 @@ public class ObjectConverter {
                 field.setAccessible(true);
                 Node value = fieldNode.getValue();
                 if (value.isValue()) {
-                    Object valueNode = parse(((ValueNode) value).getValue(), field);
+                    Object valueNode = parse(((ValueNode) value).getValue(), field.getType());
                     field.set(t, valueNode);
                 } else {
 
@@ -52,34 +52,50 @@ public class ObjectConverter {
         Class<?> implementation = containerData.getContainerClassImpl();
         T list = clazz.cast(implementation.getConstructor().newInstance());
 
-        for (Node n : ((ArrayNode) node).getNodes()) {
-            if (n.isObject()) {
-                containerData.getAddInContainer().invoke(list,
-                        convert(n, (Class) containerData.getTypeElementContainer()));
+        if (node.isArray()) {
+            for (Node n : ((ArrayNode) node).getNodes()) {
+                if (n.isObject()) {
+                    containerData.getAddInContainer().invoke(list,
+                            convert(n, (Class) containerData.getTypeElementContainer()[0]));
+                }
+            }
+        }else {
+            for (Map.Entry<String, Node> n : ((ObjectNode) node).getFields().entrySet()) {
+                String key = n.getKey();
+                Node value = n.getValue();
+                if (value.isObject()) {
+                    containerData.getAddInContainer().invoke(list,
+                            parse(key, (Class<?>) containerData.getTypeElementContainer()[0]),
+                            convert(value,  (Class<?>) containerData.getTypeElementContainer()[1]));
+                } else if (value.isValue()) {
+                    containerData.getAddInContainer().invoke(list,
+                            parse(key, (Class<?>) containerData.getTypeElementContainer()[0]),
+                            parse(((ValueNode)value).getValue(),  (Class<?>) containerData.getTypeElementContainer()[1]));
+                }
             }
         }
         return list;
     }
 
 
-    private Object parse(String value, Field field) {
+    private Object parse(String value, Class<?> clazz) {
         value = value.trim();
 
-        if (field.getType().equals(String.class)) {
-            return value.substring(1, value.length() - 1);
-        } else if (field.getType().equals(boolean.class)) {
+        if (clazz.equals(String.class)) {
+            return value;
+        } else if (clazz.equals(boolean.class)) {
             return Boolean.parseBoolean(value);
         } else if (value.equals("null")) {
             return null;
-        } else if (field.getType().equals(int.class)) {
+        } else if (clazz.equals(int.class)) {
             return Integer.parseInt(value);
-        } else if (field.getType().equals(double.class)) {
+        } else if (clazz.equals(double.class)) {
             return Double.parseDouble(value);
-        } else if (field.getType().equals(UUID.class)) {
+        } else if (clazz.equals(UUID.class)) {
 
-            return UUID.fromString(value.substring(1, value.length() - 1));
-        } else if (field.getType().equals(OffsetDateTime.class)) {
-            return OffsetDateTime.parse(value.substring(1, value.length() - 1));
+            return UUID.fromString(value);
+        } else if (clazz.equals(OffsetDateTime.class)) {
+            return OffsetDateTime.parse(value);
         }
         throw new IllegalArgumentException();
     }

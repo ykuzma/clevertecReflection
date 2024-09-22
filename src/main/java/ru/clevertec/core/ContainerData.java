@@ -8,8 +8,10 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Data
@@ -19,7 +21,7 @@ public class ContainerData<T> {
 
     private Class<T> containerClass;
 
-    private Type typeElementContainer;
+    private Type[] typeElementContainer;
     private Method addInContainer;
     private Class<?> containerClassImpl;
 
@@ -31,7 +33,13 @@ public class ContainerData<T> {
         Class<?> typeCollection = Class.forName(typeName);
         containerClass = (Class<T>)typeCollection;
 
-        typeElementContainer = containerType.getActualTypeArguments()[0];
+        if(containerClass.equals(Map.class)){
+            typeElementContainer = new Type[]{
+                    containerType.getActualTypeArguments()[0],
+                    containerType.getActualTypeArguments()[1]};
+        }else {
+            typeElementContainer = new Type[]{containerType.getActualTypeArguments()[0]};
+        }
 
         getImplementation(containerClass);
 
@@ -45,6 +53,9 @@ public class ContainerData<T> {
         } else if (clazz.equals(Set.class)) {
             containerClassImpl = HashSet.class;
             addInContainer = containerClassImpl.getMethod("add", Object.class);
+        } else if (clazz.equals(Map.class)) {
+            containerClassImpl = HashMap.class;
+            addInContainer = containerClassImpl.getMethod("put", Object.class, Object.class);
         }
 
     }
