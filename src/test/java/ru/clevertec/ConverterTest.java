@@ -19,6 +19,7 @@ import ru.clevertec.domain.TimeFlower;
 import ru.clevertec.domain.UuidFlower;
 import ru.clevertec.factory.NodeFactory;
 import ru.clevertec.parsing.JsonParser;
+import ru.clevertec.util.ConverterFactory;
 import ru.clevertec.util.StringCleanerImpl;
 import ru.clevertec.util.TestHelper;
 
@@ -37,7 +38,7 @@ class ConverterTest {
     Converter converter;
 
     public ConverterTest() {
-        converter = new Converter(new JsonParser(new StringCleanerImpl(),new NodeFactory()), new ObjectConverter(), new JsonConverter(new StringBuilder()));
+        converter = new Converter(new JsonParser(new StringCleanerImpl(),new NodeFactory()), new ObjectConverter(), new JsonConverter(new ConverterFactory()));
         helper = new TestHelper();
         objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules()
@@ -105,20 +106,7 @@ class ConverterTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @Test
-    void mappingObject() throws IllegalAccessException, JsonProcessingException {
 
-        //given
-        EasyRandom easyRandom = new EasyRandom();
-        UuidFlower uuidFlower = easyRandom.nextObject(UuidFlower.class);
-        String s1 = objectMapper.writeValueAsString(uuidFlower);
-
-        //when
-        String s = converter.mappingDomainToJson(uuidFlower);
-
-        //then
-        assertThat(s).isEqualTo(s1);
-    }
 
     @Test
     void mappingMap() throws IllegalAccessException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
@@ -142,5 +130,21 @@ class ConverterTest {
         InnerObjectsWithMapAndList actual = converter.mappingJsonToDomain(helper.getInnerMapAsString(), InnerObjectsWithMapAndList.class);
         //then
         assertThat(actual).isEqualTo(expected);
+    }
+
+
+    @Test
+    void mappingObject() throws IllegalAccessException, JsonProcessingException {
+
+        //given
+        EasyRandom easyRandom = new EasyRandom();
+        UuidFlower uuidFlower = easyRandom.nextObject(UuidFlower.class);
+        String s1 = objectMapper.writeValueAsString(uuidFlower);
+
+        //when
+        String s = converter.mappingDomainToJson(uuidFlower);
+
+        //then
+        assertThat(s).isEqualTo(s1);
     }
 }

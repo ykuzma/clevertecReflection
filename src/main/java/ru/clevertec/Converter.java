@@ -50,6 +50,6 @@ public class Converter {
     }
 
     public String mappingDomainToJson(Object object) throws IllegalAccessException {
-        return jsonConverter.convertToJson(object);
+        return jsonConverter.convertToString(object);
     }
 }
