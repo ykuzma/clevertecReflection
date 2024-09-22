@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.clevertec.core.AbstractContainer;
-import ru.clevertec.core.ObjectConverter;
+import ru.clevertec.core.ObjectConverterImpl;
 import ru.clevertec.domain.Flower;
 import ru.clevertec.domain.InnerObjectsFlower;
 import ru.clevertec.domain.InnerObjectsWithMapAndList;
@@ -40,7 +40,7 @@ class ConverterTest {
 
     public ConverterTest() {
         converter = new Converter(new JsonParser(new StringCleanerImpl(),new NodeFactory()),
-                new ObjectConverter(), new ConverterFactoryImpl());
+                new ObjectConverterImpl(), new ConverterFactoryImpl());
         helper = new TestHelper();
         objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules()

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import ru.clevertec.core.AbstractContainer;
 import ru.clevertec.core.ContainerBuilder;
 import ru.clevertec.core.ContainerData;
-import ru.clevertec.core.ObjectConverter;
+import ru.clevertec.core.ObjectConverterImpl;
 import ru.clevertec.core.node.Node;
 import ru.clevertec.core.service.ConverterFactory;
 import ru.clevertec.core.service.ConverterToJson;
@@ -19,7 +19,7 @@ import java.lang.reflect.Type;
 public class Converter {
 
     private final JsonParser parser;
-    private final ObjectConverter objectConverter;
+    private final ObjectConverterImpl objectConverter;
 
      private final ConverterFactory converterFactory;
 
