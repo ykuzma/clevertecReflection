@@ -1,4 +1,4 @@
-package ru.clevertec.core;
+package ru.clevertec.core.node;
 
 public abstract class Node {
     protected NodeType nodeType;

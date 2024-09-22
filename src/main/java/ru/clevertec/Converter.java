@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import ru.clevertec.core.AbstractContainer;
 import ru.clevertec.core.ContainerBuilder;
 import ru.clevertec.core.ContainerData;
-import ru.clevertec.core.JsonConverter;
-import ru.clevertec.core.Node;
 import ru.clevertec.core.ObjectConverter;
+import ru.clevertec.core.node.Node;
+import ru.clevertec.core.service.ConverterFactory;
+import ru.clevertec.core.service.ConverterToJson;
 import ru.clevertec.parsing.JsonParser;
 
 import java.lang.reflect.InvocationTargetException;
@@ -20,7 +21,7 @@ public class Converter {
     private final JsonParser parser;
     private final ObjectConverter objectConverter;
 
-    private final JsonConverter jsonConverter;
+     private final ConverterFactory converterFactory;
 
     public <T> T mappingJsonToDomain(String json, Class<T> clazz) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         String substring = json.substring(1);
@@ -50,6 +51,7 @@ public class Converter {
     }
 
     public String mappingDomainToJson(Object object) throws IllegalAccessException {
-        return jsonConverter.convertToString(object);
+        ConverterToJson converter = converterFactory.getConverter(object);
+        return converter.convertToJson(object).toString();
     }
 }

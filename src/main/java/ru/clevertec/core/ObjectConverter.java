@@ -1,5 +1,10 @@
 package ru.clevertec.core;
 
+import ru.clevertec.core.node.ArrayNode;
+import ru.clevertec.core.node.Node;
+import ru.clevertec.core.node.ObjectNode;
+import ru.clevertec.core.node.ValueNode;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

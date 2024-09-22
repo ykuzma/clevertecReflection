@@ -1,4 +1,4 @@
-package ru.clevertec.util;
+package ru.clevertec.core.service;
 
 public class ConverterObjectWithoutQuotes implements ConverterToJson{
     @Override

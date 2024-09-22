@@ -1,8 +1,4 @@
-package ru.clevertec.factory;
-
-import ru.clevertec.core.ArrayNode;
-import ru.clevertec.core.Node;
-import ru.clevertec.core.ObjectNode;
+package ru.clevertec.core.node;
 
 public class NodeFactory {
 

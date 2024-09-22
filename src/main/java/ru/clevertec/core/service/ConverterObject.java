@@ -1,4 +1,4 @@
-package ru.clevertec.util;
+package ru.clevertec.core.service;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 @AllArgsConstructor
 public class ConverterObject implements ConverterToJson{
 
-    private ConverterFactory factory;
+    private ConverterFactoryImpl factory;
     @Override
     public StringBuilder convertToJson(Object object) throws IllegalAccessException {
         StringBuilder sb = new StringBuilder();

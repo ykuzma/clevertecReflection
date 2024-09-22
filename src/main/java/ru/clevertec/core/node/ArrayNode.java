@@ -1,4 +1,4 @@
-package ru.clevertec.core;
+package ru.clevertec.core.node;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ArrayNode extends Node{
+public class ArrayNode extends Node {
 
     private List<Node> nodes = new ArrayList<>();
     public ArrayNode() {

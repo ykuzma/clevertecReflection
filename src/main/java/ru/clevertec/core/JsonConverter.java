@@ -2,8 +2,8 @@ package ru.clevertec.core;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import ru.clevertec.util.ConverterFactory;
-import ru.clevertec.util.ConverterToJson;
+import ru.clevertec.core.service.ConverterFactory;
+import ru.clevertec.core.service.ConverterToJson;
 
 @Data
 @RequiredArgsConstructor

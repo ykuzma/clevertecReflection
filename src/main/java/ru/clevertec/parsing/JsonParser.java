@@ -2,11 +2,11 @@ package ru.clevertec.parsing;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import ru.clevertec.core.ArrayNode;
-import ru.clevertec.core.Node;
-import ru.clevertec.factory.NodeFactory;
-import ru.clevertec.core.ObjectNode;
-import ru.clevertec.core.ValueNode;
+import ru.clevertec.core.node.ArrayNode;
+import ru.clevertec.core.node.Node;
+import ru.clevertec.core.node.NodeFactory;
+import ru.clevertec.core.node.ObjectNode;
+import ru.clevertec.core.node.ValueNode;
 import ru.clevertec.util.StringCleaner;
 
 import java.util.Arrays;

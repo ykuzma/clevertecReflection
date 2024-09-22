@@ -18,15 +18,14 @@ import ru.clevertec.domain.InnerObjectsFlower;
 import ru.clevertec.domain.InnerObjectsWithMapAndList;
 import ru.clevertec.domain.TimeFlower;
 import ru.clevertec.domain.UuidFlower;
-import ru.clevertec.factory.NodeFactory;
+import ru.clevertec.core.node.NodeFactory;
 import ru.clevertec.parsing.JsonParser;
-import ru.clevertec.util.ConverterFactory;
+import ru.clevertec.core.service.ConverterFactoryImpl;
 import ru.clevertec.util.StringCleanerImpl;
 import ru.clevertec.util.TestHelper;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,7 +40,8 @@ class ConverterTest {
     Converter converter;
 
     public ConverterTest() {
-        converter = new Converter(new JsonParser(new StringCleanerImpl(),new NodeFactory()), new ObjectConverter(), new JsonConverter(new ConverterFactory()));
+        converter = new Converter(new JsonParser(new StringCleanerImpl(),new NodeFactory()),
+                new ObjectConverter(), new ConverterFactoryImpl());
         helper = new TestHelper();
         objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules()
@@ -174,6 +174,24 @@ class ConverterTest {
         EasyRandom easyRandom = new EasyRandom();
         List<InnerObjectsFlower> flowers = List.of(easyRandom.nextObject(InnerObjectsFlower.class),
                 easyRandom.nextObject(InnerObjectsFlower.class));
+
+
+        String s1 = objectMapper.writeValueAsString(flowers);
+
+        //when
+        String s = converter.mappingDomainToJson(flowers);
+
+        //then
+        assertThat(s).isEqualTo(s1);
+    }
+
+    @Test
+    void mappingMapToString() throws IllegalAccessException, JsonProcessingException {
+
+        //given
+
+        Map<String, Boolean> flowers = Map.of("1", true,
+                "2", false);
 
 
         String s1 = objectMapper.writeValueAsString(flowers);

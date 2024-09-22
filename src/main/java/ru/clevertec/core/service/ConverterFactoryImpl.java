@@ -1,4 +1,6 @@
-package ru.clevertec.util;
+package ru.clevertec.core.service;
+
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -10,11 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class ConverterFactory {
+@NoArgsConstructor
+public class ConverterFactoryImpl implements ConverterFactory{
     private ConverterObject converterObject;
     private ConverterObjectAsString converterObjectAsString;
     private ConverterCollection converterCollection;
     private ConverterObjectWithoutQuotes withoutQuotes;
+    private ConverterMap converterMap;
 
 
     private static final List<Class<?>> CLASS_WITH_QUOTES = List.of(String.class, UUID.class,
@@ -22,13 +26,15 @@ public class ConverterFactory {
             BigDecimal.class, BigInteger.class);
     private static final List<Class<?>> CLASS_WITHOUT_QUOTES = List.of(Integer.class, Double.class, Long.class,
             Float.class, Boolean.class);
+
+    @Override
     public ConverterToJson getConverter(Object object) {
         if (object instanceof Map) {
-
+            return getConverterMap();
         } else if (object instanceof Collection<?>) {
             return getConverterCollection();
         } else if (object.getClass().isPrimitive()
-            || CLASS_WITHOUT_QUOTES.stream()
+                || CLASS_WITHOUT_QUOTES.stream()
                 .anyMatch(aClass -> aClass.equals(object.getClass()))) {
 
             return getWithoutQuotes();
@@ -36,15 +42,21 @@ public class ConverterFactory {
                 .anyMatch(aClass -> aClass.equals(object.getClass()))) {
             return getConverterObjectAsString();
         }
-     return getConverterObject();
+        return getConverterObject();
     }
 
-    private ConverterObjectWithoutQuotes getWithoutQuotes(){
-        if(withoutQuotes == null) withoutQuotes = new ConverterObjectWithoutQuotes();
+    private ConverterMap getConverterMap() {
+        if (converterMap == null) converterMap = new ConverterMap(this);
+        return converterMap;
+    }
+
+    private ConverterObjectWithoutQuotes getWithoutQuotes() {
+        if (withoutQuotes == null) withoutQuotes = new ConverterObjectWithoutQuotes();
         return withoutQuotes;
     }
-    private ConverterCollection getConverterCollection(){
-        if(converterCollection == null) converterCollection = new ConverterCollection(this);
+
+    private ConverterCollection getConverterCollection() {
+        if (converterCollection == null) converterCollection = new ConverterCollection(this);
         return converterCollection;
     }
 
@@ -52,6 +64,7 @@ public class ConverterFactory {
         if (converterObject == null) converterObject = new ConverterObject(this);
         return converterObject;
     }
+
     private ConverterObjectAsString getConverterObjectAsString() {
         if (converterObjectAsString == null) converterObjectAsString = new ConverterObjectAsString();
         return converterObjectAsString;

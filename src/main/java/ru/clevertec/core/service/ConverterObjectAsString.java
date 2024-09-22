@@ -1,4 +1,4 @@
-package ru.clevertec.util;
+package ru.clevertec.core.service;
 
 public class ConverterObjectAsString implements ConverterToJson{
 

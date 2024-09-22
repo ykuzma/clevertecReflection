@@ -1,4 +1,4 @@
-package ru.clevertec.core;
+package ru.clevertec.core.node;
 
 import lombok.Getter;
 import lombok.Setter;
