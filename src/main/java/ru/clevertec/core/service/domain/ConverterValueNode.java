@@ -1,14 +1,8 @@
-package ru.clevertec.core;
+package ru.clevertec.core.service.domain;
 
+import ru.clevertec.core.ContainerData;
 import ru.clevertec.core.node.Node;
 import ru.clevertec.core.node.ValueNode;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.util.UUID;
 
 public class ConverterValueNode implements NodeConverter{
     @Override

@@ -1,4 +1,4 @@
-package ru.clevertec.parsing;
+package ru.clevertec.core;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

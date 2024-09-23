@@ -1,6 +1,8 @@
-package ru.clevertec.core;
+package ru.clevertec.core.service.domain;
 
 import lombok.NoArgsConstructor;
+import ru.clevertec.core.ContainerBuilder;
+import ru.clevertec.core.ContainerData;
 import ru.clevertec.core.node.Node;
 
 import java.util.Map;

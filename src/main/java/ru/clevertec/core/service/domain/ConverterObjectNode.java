@@ -1,7 +1,9 @@
-package ru.clevertec.core;
+package ru.clevertec.core.service.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import ru.clevertec.core.ContainerCreator;
+import ru.clevertec.core.ContainerData;
 import ru.clevertec.core.node.Node;
 import ru.clevertec.core.node.ObjectNode;
 

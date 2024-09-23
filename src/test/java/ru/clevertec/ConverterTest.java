@@ -12,15 +12,15 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.clevertec.core.AbstractContainer;
 import ru.clevertec.core.ContainerBuilder;
-import ru.clevertec.core.NodeConverterFactory;
+import ru.clevertec.core.service.domain.NodeConverterFactory;
 import ru.clevertec.core.node.NodeFactory;
-import ru.clevertec.core.service.ConverterFactoryImpl;
+import ru.clevertec.core.service.json.ConverterFactoryImpl;
 import ru.clevertec.domain.Flower;
 import ru.clevertec.domain.InnerObjectsFlower;
 import ru.clevertec.domain.InnerObjectsWithMapAndList;
 import ru.clevertec.domain.TimeFlower;
 import ru.clevertec.domain.UuidFlower;
-import ru.clevertec.parsing.JsonParser;
+import ru.clevertec.core.JsonParser;
 import ru.clevertec.util.StringCleanerImpl;
 import ru.clevertec.util.TestHelper;
 

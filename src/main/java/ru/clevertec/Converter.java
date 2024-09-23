@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import ru.clevertec.core.AbstractContainer;
 import ru.clevertec.core.ContainerCreator;
 import ru.clevertec.core.ContainerData;
-import ru.clevertec.core.NodeConverter;
-import ru.clevertec.core.NodeConverterFactory;
+import ru.clevertec.core.service.domain.NodeConverter;
+import ru.clevertec.core.service.domain.NodeConverterFactory;
 import ru.clevertec.core.node.Node;
-import ru.clevertec.core.service.ConverterFactory;
-import ru.clevertec.core.service.ConverterToJson;
-import ru.clevertec.parsing.JsonParser;
+import ru.clevertec.core.service.json.ConverterFactory;
+import ru.clevertec.core.service.json.ConverterToJson;
+import ru.clevertec.core.JsonParser;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
@@ -43,7 +43,6 @@ public class Converter {
     private <T> Class<T> getContainerClass(AbstractContainer<T> container) throws ClassNotFoundException {
         ParameterizedType type = (ParameterizedType) container.getType();
         String typeName = type.getRawType().getTypeName();
-
 
         return (Class<T>) Class.forName(typeName);
     }

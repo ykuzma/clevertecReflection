@@ -1,5 +1,6 @@
-package ru.clevertec.core;
+package ru.clevertec.core.service.domain;
 
+import ru.clevertec.core.ContainerData;
 import ru.clevertec.core.node.Node;
 
 import java.lang.reflect.InvocationTargetException;
