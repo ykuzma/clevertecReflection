@@ -15,6 +15,7 @@ import ru.clevertec.core.ContainerBuilder;
 import ru.clevertec.core.service.domain.NodeConverterFactory;
 import ru.clevertec.core.node.NodeFactory;
 import ru.clevertec.core.service.json.ConverterFactoryImpl;
+import ru.clevertec.domain.Customer;
 import ru.clevertec.domain.Flower;
 import ru.clevertec.domain.InnerObjectsFlower;
 import ru.clevertec.domain.InnerObjectsWithMapAndList;
@@ -50,9 +51,20 @@ class ConverterTest {
 
     }
 
+    @Test
+    void shouldMappingJsonToCustomer() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+
+        //given
+        Customer expected = objectMapper.readValue(helper.getCustomerJsonAsString(), Customer.class);
+
+        //when
+        Customer actual = converter.mappingJsonToDomain(helper.getCustomerJsonAsString(), Customer.class);
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
     @ParameterizedTest
     @MethodSource
-    void mappingJsonToDomain(Class<?> clazz, String json) throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    void shouldMappingJsonToDomain(Class<?> clazz, String json) throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
         //given
         Object o1 = objectMapper.readValue(json, clazz);
@@ -63,16 +75,14 @@ class ConverterTest {
         assertThat(o).isEqualTo(o1);
     }
 
-    public static Stream<Arguments> mappingJsonToDomain() throws IOException {
+    public static Stream<Arguments> shouldMappingJsonToDomain() throws IOException {
         return Stream.of(
                 Arguments.of(Flower.class, new TestHelper().getFlowersJsonAsString()),
                 Arguments.of(UuidFlower.class, new TestHelper().getUuidJsonAsString())
         );
     }
-
-
     @Test
-    void mappingJsonToTimeFlower() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    void shouldMappingJsonToTimeFlower() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
         //given
         TimeFlower timeFlowerExpected = objectMapper.readValue(helper.getTimeJsonAsString(), TimeFlower.class);
@@ -82,10 +92,8 @@ class ConverterTest {
         //then
         assertThat(timeFlowerActual).isEqualTo(timeFlowerExpected);
     }
-
-
     @Test
-    void mappingJsonToInnerFlower() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    void shouldMappingJsonToInnerFlower() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
         //given
         InnerObjectsFlower innerFlowerExpected = objectMapper.readValue(helper.getInnerJsonAsString(), InnerObjectsFlower.class);
@@ -95,9 +103,8 @@ class ConverterTest {
         //then
         assertThat(innerFlowerActual).isEqualTo(innerFlowerExpected);
     }
-
     @Test
-    void mappingJson() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    void shouldMappingJsonToSet() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
         //given
         Set<UuidFlower> expected = objectMapper.readValue(helper.getListAsString(),
@@ -110,11 +117,8 @@ class ConverterTest {
         //then
         assertThat(actual).isEqualTo(expected);
     }
-
-
-
     @Test
-    void mappingMap() throws IllegalAccessException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+    void shouldMappingJsonToMap() throws IllegalAccessException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         //given
         Map<String, UUID> expected = objectMapper.readValue(helper.getMapJsonAsString(),
                 new TypeReference<>() {
@@ -127,7 +131,7 @@ class ConverterTest {
     }
 
     @Test
-    void mappingInnerMap() throws IllegalAccessException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+    void shouldMappingJsonToInnerMap() throws IllegalAccessException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
         //given
         InnerObjectsWithMapAndList expected = objectMapper.readValue(helper.getInnerMapAsString(), InnerObjectsWithMapAndList.class);
 
@@ -136,10 +140,8 @@ class ConverterTest {
         //then
         assertThat(actual).isEqualTo(expected);
     }
-
-
     @Test
-    void mappingObject() throws IllegalAccessException, JsonProcessingException {
+    void shouldMappingDomainToString() throws IllegalAccessException, JsonProcessingException {
 
         //given
         EasyRandom easyRandom = new EasyRandom();
@@ -154,7 +156,7 @@ class ConverterTest {
     }
 
     @Test
-    void mappingDifficultObject() throws IllegalAccessException, JsonProcessingException {
+    void shouldMappingDifficultObjectToString() throws IllegalAccessException, JsonProcessingException {
 
         //given
         EasyRandom easyRandom = new EasyRandom();
@@ -169,13 +171,12 @@ class ConverterTest {
     }
 
     @Test
-    void mappingList() throws IllegalAccessException, JsonProcessingException {
+    void shouldMappingListToString() throws IllegalAccessException, JsonProcessingException {
 
         //given
         EasyRandom easyRandom = new EasyRandom();
         List<InnerObjectsFlower> flowers = List.of(easyRandom.nextObject(InnerObjectsFlower.class),
                 easyRandom.nextObject(InnerObjectsFlower.class));
-
 
         String s1 = objectMapper.writeValueAsString(flowers);
 
@@ -187,16 +188,12 @@ class ConverterTest {
     }
 
     @Test
-    void mappingMapToString() throws IllegalAccessException, JsonProcessingException {
+    void shouldMappingMapToString() throws IllegalAccessException, JsonProcessingException {
 
         //given
-
         Map<String, Boolean> flowers = Map.of("1", true,
                 "2", false);
-
-
         String s1 = objectMapper.writeValueAsString(flowers);
-
         //when
         String s = converter.mappingDomainToJson(flowers);
 

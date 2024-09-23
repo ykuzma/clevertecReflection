@@ -31,10 +31,12 @@ public class JsonParser {
                 i += offset + 1;
             } else if (json[i] == ']' || json[i] == '}') {
                 addElementInNode(parent, child, Arrays.copyOfRange(json, index, i));
+
                 offset = i;
                 return parent;
             } else if (json[i] == ',' && countQuote % 2 == 0) {
                 addElementInNode(parent, child, Arrays.copyOfRange(json, index, i));
+                child = null;
                 index = i + 1;
             } else if (json[i] == '"' && (i == 0 ||String.valueOf(json).codePointBefore(i) != '\\')) {
 
