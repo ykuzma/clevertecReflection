@@ -22,10 +22,10 @@ public class ConverterFactoryImpl implements ConverterFactory{
 
 
     private static final List<Class<?>> CLASS_WITH_QUOTES = List.of(String.class, UUID.class,
-            OffsetDateTime.class, LocalDate.class, LocalDateTime.class,
-            BigDecimal.class, BigInteger.class);
+            OffsetDateTime.class, LocalDate.class, LocalDateTime.class
+            );
     private static final List<Class<?>> CLASS_WITHOUT_QUOTES = List.of(Integer.class, Double.class, Long.class,
-            Float.class, Boolean.class);
+            Float.class, Boolean.class, BigDecimal.class, BigInteger.class);
 
     @Override
     public ConverterToJson getConverter(Object object) {
