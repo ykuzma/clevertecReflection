@@ -1,6 +1,7 @@
 package ru.clevertec.core;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,13 +10,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ContainerBuilder<T> {
+public class ContainerBuilder<T> implements ContainerCreator{
+
 
     private Class<T> containerClass;
 
     private Type[] typeElementInContainer;
     private Method addInContainer;
     private Class<?> containerClassImpl;
+
+    @Override
+    public <T> ContainerData<T> create(Class<T>clazz, Type type) throws NoSuchMethodException {
+        if(type instanceof ParameterizedType parameterizedType) {
+            typeElementInContainer = parameterizedType.getActualTypeArguments();
+        }
+        return new ContainerBuilder<T>()
+                .setContainerClass(clazz)
+                .setTypeElementInContainer(typeElementInContainer)
+                .build();
+
+    }
 
     public ContainerBuilder<T> setContainerClass(Class<T> clazz) {
         containerClass = clazz;
