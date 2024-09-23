@@ -1,4 +1,4 @@
-package ru.clevertec.core.service.domain;
+package ru.clevertec.core.service.deserialization;
 
 import ru.clevertec.core.ContainerData;
 import ru.clevertec.core.node.Node;

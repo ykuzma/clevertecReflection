@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import ru.clevertec.core.AbstractContainer;
 import ru.clevertec.core.ContainerCreator;
 import ru.clevertec.core.ContainerData;
-import ru.clevertec.core.service.domain.NodeConverter;
-import ru.clevertec.core.service.domain.NodeConverterFactory;
+import ru.clevertec.core.service.deserialization.NodeConverter;
+import ru.clevertec.core.service.deserialization.NodeConverterFactory;
 import ru.clevertec.core.node.Node;
-import ru.clevertec.core.service.json.ConverterFactory;
-import ru.clevertec.core.service.json.ConverterToJson;
+import ru.clevertec.core.service.serialization.ConverterFactory;
+import ru.clevertec.core.service.serialization.ConverterToJson;
 import ru.clevertec.core.JsonParser;
 
 import java.lang.reflect.InvocationTargetException;

@@ -1,4 +1,4 @@
-package ru.clevertec.core.service.json;
+package ru.clevertec.core.service.serialization;
 
 import lombok.NoArgsConstructor;
 
