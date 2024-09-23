@@ -19,32 +19,5 @@ public class ConverterValueNode implements NodeConverter{
         return (T) parseValue(valueNode.getValue(), containerClass);
     }
 
-    private Object parseValue(String value, Class<?> clazz) {
-        value = value.trim();
 
-        if (value.equals("null")) {
-            return null;
-        } else if (clazz.equals(boolean.class) || clazz.equals(Boolean.class)) {
-            return Boolean.parseBoolean(value);
-        } else if (clazz.equals(String.class)) {
-            return value;
-        } else if (clazz.equals(int.class)|| clazz.equals(Integer.class)) {
-            return Integer.parseInt(value);
-        } else if (clazz.equals(double.class) || clazz.equals(Double.class)) {
-            return Double.parseDouble(value);
-        } else if (clazz.equals(UUID.class)) {
-            return UUID.fromString(value);
-        } else if (clazz.equals(OffsetDateTime.class)) {
-            return OffsetDateTime.parse(value);
-        } else if (clazz.equals(BigDecimal.class)) {
-            return new BigDecimal(value);
-        } else if (clazz.equals(BigInteger.class)) {
-            return new BigInteger(value);
-        } else if (clazz.equals(LocalDate.class)) {
-            return LocalDate.parse(value);
-        } else if (clazz.equals(LocalDateTime.class)) {
-            return LocalDateTime.parse(value);
-        }
-        throw new IllegalArgumentException();
-    }
 }

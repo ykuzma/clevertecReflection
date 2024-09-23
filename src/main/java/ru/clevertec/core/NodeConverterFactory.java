@@ -11,31 +11,39 @@ public class NodeConverterFactory {
     private ConverterObjectNode objectNode;
     private ConverterValueNode valueNode;
     private ConverterCollectionNode collectionNode;
+    private ConverterMapNode mapNode;
 
     public NodeConverter getNodeConverter(Node node, ContainerData<?> containerData) {
         Class<?> containerClass = containerData.getContainerClass();
-        if(node.isObject() && !containerClass.equals(Map.class)) {
+        if (node.isObject() && !containerClass.equals(Map.class)) {
             return getObjectNode();
         } else if (node.isValue()) {
             return getValueNode();
         } else if (node.isArray() && !containerClass.isArray()) {
             return getCollectionNode();
+        } else if (containerClass.equals(Map.class)) {
+            return getMapNode();
         }
         return null;
     }
 
-    private ConverterCollectionNode getCollectionNode(){
-        if(collectionNode == null) collectionNode = new ConverterCollectionNode(this, new ContainerBuilder<>());
+    private ConverterMapNode getMapNode() {
+        if (mapNode == null) mapNode = new ConverterMapNode(this, new ContainerBuilder<>());
+        return mapNode;
+    }
+
+    private ConverterCollectionNode getCollectionNode() {
+        if (collectionNode == null) collectionNode = new ConverterCollectionNode(this, new ContainerBuilder<>());
         return collectionNode;
     }
 
-    private ConverterObjectNode getObjectNode(){
-        if(objectNode == null) objectNode = new ConverterObjectNode(this, new ContainerBuilder<>());
+    private ConverterObjectNode getObjectNode() {
+        if (objectNode == null) objectNode = new ConverterObjectNode(this, new ContainerBuilder<>());
         return objectNode;
     }
 
-    private ConverterValueNode getValueNode(){
-        if(valueNode == null) valueNode = new ConverterValueNode();
+    private ConverterValueNode getValueNode() {
+        if (valueNode == null) valueNode = new ConverterValueNode();
         return valueNode;
     }
 }
