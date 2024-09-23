@@ -82,6 +82,11 @@ class ConverterTest {
         //then
         assertThat(timeFlowerActual).isEqualTo(timeFlowerExpected);
     }
+    @Test
+    void mappingJsonToTimeFlower2() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+
+
+    }
 
     @Test
     void mappingJsonToInnerFlower() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
