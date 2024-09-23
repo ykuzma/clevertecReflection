@@ -12,15 +12,15 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.clevertec.core.AbstractContainer;
 import ru.clevertec.core.ContainerBuilder;
-import ru.clevertec.core.ObjectConverterImpl;
+import ru.clevertec.core.NodeConverterFactory;
+import ru.clevertec.core.node.NodeFactory;
+import ru.clevertec.core.service.ConverterFactoryImpl;
 import ru.clevertec.domain.Flower;
 import ru.clevertec.domain.InnerObjectsFlower;
 import ru.clevertec.domain.InnerObjectsWithMapAndList;
 import ru.clevertec.domain.TimeFlower;
 import ru.clevertec.domain.UuidFlower;
-import ru.clevertec.core.node.NodeFactory;
 import ru.clevertec.parsing.JsonParser;
-import ru.clevertec.core.service.ConverterFactoryImpl;
 import ru.clevertec.util.StringCleanerImpl;
 import ru.clevertec.util.TestHelper;
 
@@ -41,7 +41,7 @@ class ConverterTest {
 
     public ConverterTest() {
         converter = new Converter(new JsonParser(new StringCleanerImpl(),new NodeFactory()),
-                new ObjectConverterImpl(), new ConverterFactoryImpl(), new ContainerBuilder<>());
+                new NodeConverterFactory(), new ConverterFactoryImpl(), new ContainerBuilder<>());
         helper = new TestHelper();
         objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules()
@@ -82,11 +82,7 @@ class ConverterTest {
         //then
         assertThat(timeFlowerActual).isEqualTo(timeFlowerExpected);
     }
-    @Test
-    void mappingJsonToTimeFlower2() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
-
-    }
 
     @Test
     void mappingJsonToInnerFlower() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {

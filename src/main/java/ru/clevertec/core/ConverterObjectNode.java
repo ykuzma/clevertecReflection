@@ -17,7 +17,7 @@ public class ConverterObjectNode implements NodeConverter {
     private ContainerCreator containerCreator;
 
     @Override
-    public <T> T convert(Node node, ContainerData<T> container) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public <T> T convert(Node node, ContainerData<T> container) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         Class<T> object = container.getContainerClass();
         ObjectNode objectNode = (ObjectNode) node;
         Map<String, Node> nodeFields = objectNode.getFields();

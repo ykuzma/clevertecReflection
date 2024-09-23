@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import ru.clevertec.core.AbstractContainer;
 import ru.clevertec.core.ContainerCreator;
 import ru.clevertec.core.ContainerData;
-import ru.clevertec.core.ObjectConverterImpl;
+import ru.clevertec.core.NodeConverter;
+import ru.clevertec.core.NodeConverterFactory;
 import ru.clevertec.core.node.Node;
 import ru.clevertec.core.service.ConverterFactory;
 import ru.clevertec.core.service.ConverterToJson;
@@ -18,7 +19,7 @@ import java.lang.reflect.ParameterizedType;
 public class Converter {
 
     private final JsonParser parser;
-    private final ObjectConverterImpl objectConverter;
+    private final NodeConverterFactory nodeConverterFactory;
 
      private final ConverterFactory converterFactory;
      private final ContainerCreator containerCreator;
@@ -26,15 +27,17 @@ public class Converter {
     public <T> T mappingJsonToDomain(String json, Class<T> clazz) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         String substring = json.substring(1);
         Node parse = parser.parse(json.charAt(0), substring.toCharArray());
-        return objectConverter.convert(parse, clazz);
+        ContainerData<T> containerData = containerCreator.create(clazz, null);
+        NodeConverter nodeConverter = nodeConverterFactory.getNodeConverter(parse, containerData);
+        return nodeConverter.convert(parse, containerData);
     }
 
     public <T> T mappingJsonToDomain(String json, AbstractContainer<T> container) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         String substring = json.substring(1);
         Node parse = parser.parse(json.charAt(0), substring.toCharArray());
         ContainerData<T> containerData = containerCreator.create(getContainerClass(container), container.getType());
-
-        return objectConverter.convert(parse, containerData);
+        NodeConverter nodeConverter = nodeConverterFactory.getNodeConverter(parse, containerData);
+        return nodeConverter.convert(parse, containerData);
     }
 
     private <T> Class<T> getContainerClass(AbstractContainer<T> container) throws ClassNotFoundException {

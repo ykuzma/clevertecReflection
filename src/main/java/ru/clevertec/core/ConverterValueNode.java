@@ -22,12 +22,12 @@ public class ConverterValueNode implements NodeConverter{
     private Object parseValue(String value, Class<?> clazz) {
         value = value.trim();
 
-        if (clazz.equals(String.class)) {
-            return value;
+        if (value.equals("null")) {
+            return null;
         } else if (clazz.equals(boolean.class) || clazz.equals(Boolean.class)) {
             return Boolean.parseBoolean(value);
-        } else if (value.equals("null")) {
-            return null;
+        } else if (clazz.equals(String.class)) {
+            return value;
         } else if (clazz.equals(int.class)|| clazz.equals(Integer.class)) {
             return Integer.parseInt(value);
         } else if (clazz.equals(double.class) || clazz.equals(Double.class)) {

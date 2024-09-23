@@ -20,9 +20,10 @@ public class ContainerBuilder<T> implements ContainerCreator{
     private Class<?> containerClassImpl;
 
     @Override
-    public <T> ContainerData<T> create(Class<T>clazz, Type type) throws NoSuchMethodException {
+    public <T> ContainerData<T> create(Class<T>clazz, Type type) throws NoSuchMethodException, ClassNotFoundException {
         if(type instanceof ParameterizedType parameterizedType) {
             typeElementInContainer = parameterizedType.getActualTypeArguments();
+            clazz = (Class<T>) Class.forName(parameterizedType.getRawType().getTypeName());
         }
         return new ContainerBuilder<T>()
                 .setContainerClass(clazz)
