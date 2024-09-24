@@ -13,7 +13,7 @@ public class ConverterObject implements ConverterToJson{
     @Override
     public StringBuilder convertToJson(Object object) throws IllegalAccessException {
         StringBuilder sb = new StringBuilder();
-        sb.append('{');
+        sb.append(OBJECT_START);
         Field[] declaredFields = object.getClass().getDeclaredFields();
         for (Field field: declaredFields) {
             field.setAccessible(true);
@@ -22,9 +22,9 @@ public class ConverterObject implements ConverterToJson{
             ConverterToJson converter = factory.getConverter(cast);
             StringBuilder value = converter.convertToJson(cast);
             sb.append(fieldNAmeToStringBuilder(name))
-                    .append(':')
+                    .append(COLON)
                     .append(value)
-                    .append(',');
+                    .append(COMMA);
         }
         sb.replace(sb.lastIndexOf(","), sb.length(), "}");
         return sb;

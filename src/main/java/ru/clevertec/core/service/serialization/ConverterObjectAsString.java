@@ -6,9 +6,9 @@ public class ConverterObjectAsString implements ConverterToJson{
     @Override
     public StringBuilder convertToJson(Object object) {
         StringBuilder sb = new StringBuilder();
-        sb.append('"')
+        sb.append(QUOTES)
                 .append(object.toString())
-                .append('"');
+                .append(QUOTES);
         return sb;
     }
 }

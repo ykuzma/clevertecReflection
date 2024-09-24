@@ -15,13 +15,13 @@ public class ConverterCollection implements ConverterToJson{
     @Override
     public StringBuilder convertToJson(Object object) throws IllegalAccessException {
         StringBuilder sb = new StringBuilder();
-        sb.append('[');
+        sb.append(ARRAY_START);
         Collection<?> collection = (Collection<?>) object;
         for (Object element: collection) {
             ConverterToJson converter = factory.getConverter(element);
             StringBuilder value = converter.convertToJson(element);
             sb.append(value)
-                    .append(',');
+                    .append(COMMA);
         }
         sb.replace(sb.lastIndexOf(","), sb.length(), "]");
         return sb;

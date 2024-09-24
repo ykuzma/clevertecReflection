@@ -21,7 +21,7 @@ import ru.clevertec.domain.InnerObjectsFlower;
 import ru.clevertec.domain.InnerObjectsWithMapAndList;
 import ru.clevertec.domain.TimeFlower;
 import ru.clevertec.domain.UuidFlower;
-import ru.clevertec.core.JsonParser;
+import ru.clevertec.core.JsonParserImpl;
 import ru.clevertec.util.StringCleanerImpl;
 import ru.clevertec.util.TestHelper;
 
@@ -41,7 +41,7 @@ class ConverterTest {
     Converter converter;
 
     public ConverterTest() {
-        converter = new Converter(new JsonParser(new StringCleanerImpl(),new NodeFactory()),
+        converter = new Converter(new JsonParserImpl(new StringCleanerImpl(),new NodeFactory()),
                 new NodeConverterFactory(), new ConverterFactoryImpl(), new ContainerBuilder<>());
         helper = new TestHelper();
         objectMapper = new ObjectMapper();
@@ -59,6 +59,20 @@ class ConverterTest {
 
         //when
         Customer actual = converter.mappingJsonToDomain(helper.getCustomerJsonAsString(), Customer.class);
+        //then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void shouldMappingCustomerToJson() throws IOException, IllegalAccessException {
+
+        //given
+        EasyRandom easyRandom = new EasyRandom();
+        Customer customer = easyRandom.nextObject(Customer.class);
+        String expected = objectMapper.writeValueAsString(customer);
+
+        //when
+        String actual = converter.mappingDomainToJson(customer);
         //then
         assertThat(actual).isEqualTo(expected);
     }

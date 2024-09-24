@@ -13,7 +13,7 @@ public class ConverterMap implements ConverterToJson{
     @Override
     public StringBuilder convertToJson(Object object) throws IllegalAccessException {
         StringBuilder sb = new StringBuilder();
-        sb.append('{');
+        sb.append(OBJECT_START);
         Map<?,?> collection = (Map<?,?>) object;
         for (Map.Entry<?, ?> entry: collection.entrySet()) {
             Object key = entry.getKey();
@@ -21,9 +21,9 @@ public class ConverterMap implements ConverterToJson{
             ConverterToJson converter = factory.getConverter(value);
 
             sb.append(fieldNAmeToStringBuilder(key.toString()))
-                    .append(':')
+                    .append(COLON)
                     .append(converter.convertToJson(value))
-                    .append(',');
+                    .append(COMMA);
         }
         sb.replace(sb.lastIndexOf(","), sb.length(), "}");
         return sb;
