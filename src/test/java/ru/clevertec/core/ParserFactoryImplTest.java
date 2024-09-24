@@ -16,11 +16,22 @@ class ParserFactoryImplTest {
     @Test
     void shouldGetParserArray() {
         //given
-        String json = "[]";
+        String json = "[\"hello\"    :\"]";
 
         //when
         ParserJson parser = parserFactory.getParser(json);
         //then
         assertThat(parser).isInstanceOf(ParserArray.class);
+    }
+
+    @Test
+    void shouldGetParserOneLine() {
+        //given
+        String json = "\"hello\"    :\"";
+
+        //when
+        ParserJson parser = parserFactory.getParser(json);
+        //then
+        assertThat(parser).isInstanceOf(ParserOneLineObject.class);
     }
 }
