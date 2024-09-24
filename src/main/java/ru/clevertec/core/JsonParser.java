@@ -26,12 +26,11 @@ public class JsonParser {
         Node parent = nodeFactory.create(start);
         Node child  = null;
         for (int i = 0; i < json.length; i++) {
-            if (json[i] == '[' || json[i] == '{') {
+            if ((json[i] == '[' || json[i] == '{') && countQuote % 2 == 0) {
                 child = parse(json[i], Arrays.copyOfRange(json, i + 1, json.length));
                 i += offset + 1;
-            } else if (json[i] == ']' || json[i] == '}') {
+            } else if ((json[i] == ']' || json[i] == '}') && countQuote % 2 == 0) {
                 addElementInNode(parent, child, Arrays.copyOfRange(json, index, i));
-
                 offset = i;
                 return parent;
             } else if (json[i] == ',' && countQuote % 2 == 0) {
@@ -39,7 +38,6 @@ public class JsonParser {
                 child = null;
                 index = i + 1;
             } else if (json[i] == '"' && (i == 0 ||String.valueOf(json).codePointBefore(i) != '\\')) {
-
                 countQuote++;
             }
         }

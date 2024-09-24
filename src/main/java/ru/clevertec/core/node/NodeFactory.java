@@ -7,7 +7,7 @@ public class NodeFactory {
         return switch (bit) {
             case '{' -> new ObjectNode();
             case '[' -> new ArrayNode();
-            default -> throw new RuntimeException();
+            default -> throw new IllegalArgumentException();
         };
     }
 }

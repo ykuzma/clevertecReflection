@@ -39,7 +39,7 @@ public class ParserFactoryImpl implements ParserFactory {
     }
 
     private ParserJson getParserObject() {
-        if(parserObject == null) parserObject = new ParserObject();
+        if(parserObject == null) parserObject = new ParserObject(new ReplacerComma(), this);
         return parserObject;
     }
 
