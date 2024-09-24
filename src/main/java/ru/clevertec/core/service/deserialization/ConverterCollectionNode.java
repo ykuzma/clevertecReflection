@@ -28,10 +28,10 @@ public class ConverterCollectionNode implements NodeConverter {
         Method addInContainer = containerData.getAddInContainer();
         for (Node n : nodes) {
 
-            ContainerData<T> containerData1 = containerCreator.create((Class<T>) containerData.getTypeElementInContainer()[0],
+            ContainerData<?> containerData1 = containerCreator.create( (Class<?>)containerData.getTypeElementInContainer()[0],
                     containerData.getTypeElementInContainer()[0]);
             NodeConverter nodeConverter = factory.getNodeConverter(n, containerData1);
-            T value = nodeConverter.convert(n, containerData1);
+            Object value = nodeConverter.convert(n, containerData1);
             addInContainer.invoke(list, value);
         }
 

@@ -14,10 +14,11 @@ public class TestHelper {
     private final String MAP_PATH = "src/test/resources/Map.json";
     private final String INNER_MAP_PATH = "src/test/resources/InnerMapAndList.json";
     private final String CUSTOMERS_PATH = "src/test/resources/customer.json";
+    private final String LIL_PATH = "src/test/resources/ListInList.json";
 
-    public String getFlowersJsonAsString() throws IOException {
+    private String getJson(String path) throws IOException {
         String json;
-        try (BufferedReader br = new BufferedReader(new FileReader(FLOWERS_PATH))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             StringBuilder sb = new StringBuilder();
             while (br.ready()){
                 sb.append(br.readLine());
@@ -26,85 +27,35 @@ public class TestHelper {
         }
         return json;
     }
+    public String getListInListJsonAsString() throws IOException {
+        return getJson(LIL_PATH);
+    }
+    public String getFlowersJsonAsString() throws IOException {
+        return getJson(FLOWERS_PATH);
+    }
     public String getCustomerJsonAsString() throws IOException {
-        String json;
-        try (BufferedReader br = new BufferedReader(new FileReader(CUSTOMERS_PATH))) {
-            StringBuilder sb = new StringBuilder();
-            while (br.ready()){
-                sb.append(br.readLine());
-            }
-            json = sb.toString();
-        }
-        return json;
+        return getJson(CUSTOMERS_PATH);
     }
 
     public String getInnerMapAsString() throws IOException {
-        String json;
-        try (BufferedReader br = new BufferedReader(new FileReader(INNER_MAP_PATH))) {
-            StringBuilder sb = new StringBuilder();
-            while (br.ready()){
-                sb.append(br.readLine());
-            }
-            json = sb.toString();
-        }
-        return json;
+        return getJson(INNER_MAP_PATH);
     }
     public String getMapJsonAsString() throws IOException {
-        String json;
-        try (BufferedReader br = new BufferedReader(new FileReader(MAP_PATH))) {
-            StringBuilder sb = new StringBuilder();
-            while (br.ready()){
-                sb.append(br.readLine());
-            }
-            json = sb.toString();
-        }
-        return json;
+        return getJson(MAP_PATH);
     }
 
     public String getUuidJsonAsString() throws IOException {
-        String json;
-        try (BufferedReader br = new BufferedReader(new FileReader(UUID_PATH))) {
-            StringBuilder sb = new StringBuilder();
-            while (br.ready()){
-                sb.append(br.readLine());
-            }
-            json = sb.toString();
-        }
-        return json;
+        return getJson(UUID_PATH);
     }
 
     public String getListAsString() throws IOException {
-        String json;
-        try (BufferedReader br = new BufferedReader(new FileReader(LIST_PATH))) {
-            StringBuilder sb = new StringBuilder();
-            while (br.ready()){
-                sb.append(br.readLine());
-            }
-            json = sb.toString();
-        }
-        return json;
+        return getJson(LIST_PATH);
     }
     public String getTimeJsonAsString() throws IOException {
-        String json;
-        try (BufferedReader br = new BufferedReader(new FileReader(TIME_PATH))) {
-            StringBuilder sb = new StringBuilder();
-            while (br.ready()){
-                sb.append(br.readLine());
-            }
-            json = sb.toString();
-        }
-        return json;
+        return getJson(TIME_PATH);
     }
 
     public String getInnerJsonAsString() throws IOException {
-        String json;
-        try (BufferedReader br = new BufferedReader(new FileReader(INNER_PATH))) {
-            StringBuilder sb = new StringBuilder();
-            while (br.ready()){
-                sb.append(br.readLine());
-            }
-            json = sb.toString();
-        }
-        return json;
+        return getJson(INNER_PATH);
     }
 }
