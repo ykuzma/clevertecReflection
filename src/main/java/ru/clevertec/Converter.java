@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import ru.clevertec.core.AbstractContainer;
 import ru.clevertec.core.ContainerCreator;
 import ru.clevertec.core.ContainerData;
-import ru.clevertec.core.JsonParser;
+import ru.clevertec.core.JsonParser2;
 import ru.clevertec.core.node.Node;
+import ru.clevertec.core.node.NodeFactory;
 import ru.clevertec.core.service.deserialization.NodeConverter;
 import ru.clevertec.core.service.deserialization.NodeConverterFactory;
 import ru.clevertec.core.service.serialization.ConverterFactory;
@@ -18,9 +19,9 @@ import java.lang.reflect.ParameterizedType;
 @AllArgsConstructor
 public class Converter {
 
-    private final JsonParser parser;
+    private final JsonParser2 parser;
     private final NodeConverterFactory nodeConverterFactory;
-
+    private final NodeFactory nodeFactory;
     private final ConverterFactory converterFactory;
     private final ContainerCreator containerCreator;
 
@@ -40,8 +41,8 @@ public class Converter {
     }
 
     private <T> T jsonToDomain(String json, ContainerData<T> containerData) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-        String substring = json.substring(1);
-        Node parse = parser.parse(json.charAt(0), substring.toCharArray());
+        Node parse = nodeFactory.create(json.charAt(0));
+        parser.parse(parse, json.toCharArray());
         NodeConverter nodeConverter = nodeConverterFactory.getNodeConverter(parse, containerData);
         return nodeConverter.convert(parse, containerData);
     }

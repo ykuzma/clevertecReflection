@@ -12,8 +12,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.clevertec.core.AbstractContainer;
 import ru.clevertec.core.ContainerBuilder;
-import ru.clevertec.core.service.deserialization.NodeConverterFactory;
+import ru.clevertec.core.Parser2;
 import ru.clevertec.core.node.NodeFactory;
+import ru.clevertec.core.service.deserialization.NodeConverterFactory;
 import ru.clevertec.core.service.serialization.ConverterFactoryImpl;
 import ru.clevertec.domain.Customer;
 import ru.clevertec.domain.Flower;
@@ -21,7 +22,6 @@ import ru.clevertec.domain.InnerObjectsFlower;
 import ru.clevertec.domain.InnerObjectsWithMapAndList;
 import ru.clevertec.domain.TimeFlower;
 import ru.clevertec.domain.UuidFlower;
-import ru.clevertec.core.JsonParserImpl;
 import ru.clevertec.util.StringCleanerImpl;
 import ru.clevertec.util.TestHelper;
 
@@ -41,8 +41,8 @@ class ConverterTest {
     Converter converter;
 
     public ConverterTest() {
-        converter = new Converter(new JsonParserImpl(new StringCleanerImpl(),new NodeFactory()),
-                new NodeConverterFactory(), new ConverterFactoryImpl(), new ContainerBuilder<>());
+        converter = new Converter(new Parser2(new NodeFactory(), new StringCleanerImpl()),
+                new NodeConverterFactory(), new NodeFactory(), new ConverterFactoryImpl(), new ContainerBuilder<>());
         helper = new TestHelper();
         objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules()
