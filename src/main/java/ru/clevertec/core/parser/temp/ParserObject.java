@@ -19,8 +19,8 @@ public class ParserObject implements ParserJson{
         for (String s: strings) {
             String[] split = s.split(":", 2);
             ParserJson parser = parserFactory.getParser(split[1]);
-            Node parse = parser.parse(split[1]);
-            objectNode.getFields().put(new StringCleanerImpl().clean(split[0]), parse);
+            Node value = parser.parse(split[1]);
+            objectNode.getFields().put(new StringCleanerImpl().clean(split[0]), value);
         }
         return objectNode;
     }
