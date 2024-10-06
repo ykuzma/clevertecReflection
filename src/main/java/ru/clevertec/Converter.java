@@ -2,7 +2,6 @@ package ru.clevertec;
 
 import lombok.AllArgsConstructor;
 import ru.clevertec.core.AbstractContainer;
-import ru.clevertec.core.ContainerCreator;
 import ru.clevertec.core.ContainerData;
 import ru.clevertec.core.JsonParser2;
 import ru.clevertec.core.node.Node;
@@ -23,15 +22,17 @@ public class Converter {
     private final NodeConverterFactory nodeConverterFactory;
     private final NodeFactory nodeFactory;
     private final ConverterFactory converterFactory;
-    private final ContainerCreator containerCreator;
+
 
     public <T> T mappingJsonToDomain(String json, Class<T> clazz) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-        ContainerData<T> containerData = containerCreator.create(clazz, null);
+        ContainerData<T> containerData = new ContainerData.ContainerBuilder<>(clazz).build();
         return jsonToDomain(json, containerData);
     }
 
     public <T> T mappingJsonToDomain(String json, AbstractContainer<T> container) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        ContainerData<T> containerData = containerCreator.create(getContainerClass(container), container.getType());
+        ContainerData<T> containerData = new ContainerData.ContainerBuilder<>(getContainerClass(container))
+                .setTypeElementInContainer(container.getType())
+                .build();
         return jsonToDomain(json, containerData);
     }
 
@@ -44,14 +45,13 @@ public class Converter {
         Node parse = nodeFactory.create(json.charAt(0));
         parser.parse(parse, json.toCharArray());
         NodeConverter nodeConverter = nodeConverterFactory.getNodeConverter(parse, containerData);
-        return nodeConverter.convert(parse, containerData);
+        return  nodeConverter.convert(parse, containerData);
     }
 
-    private <T> Class<T> getContainerClass(AbstractContainer<T> container) throws ClassNotFoundException {
+    private <T> Class<T> getContainerClass(AbstractContainer<T> container) {
         ParameterizedType type = (ParameterizedType) container.getType();
-        String typeName = type.getRawType().getTypeName();
 
-        return (Class<T>) Class.forName(typeName);
+        return (Class<T>) type.getRawType();
     }
 
 

@@ -1,7 +1,6 @@
 package ru.clevertec.core.service.deserialization;
 
 import lombok.NoArgsConstructor;
-import ru.clevertec.core.ContainerBuilder;
 import ru.clevertec.core.ContainerData;
 import ru.clevertec.core.node.Node;
 
@@ -30,17 +29,17 @@ public class NodeConverterFactory {
     }
 
     private ConverterMapNode getMapNode() {
-        if (mapNode == null) mapNode = new ConverterMapNode(this, new ContainerBuilder<>());
+        if (mapNode == null) mapNode = new ConverterMapNode(this);
         return mapNode;
     }
 
     private ConverterCollectionNode getCollectionNode() {
-        if (collectionNode == null) collectionNode = new ConverterCollectionNode(this, new ContainerBuilder<>());
+        if (collectionNode == null) collectionNode = new ConverterCollectionNode(this);
         return collectionNode;
     }
 
     private ConverterObjectNode getObjectNode() {
-        if (objectNode == null) objectNode = new ConverterObjectNode(this, new ContainerBuilder<>());
+        if (objectNode == null) objectNode = new ConverterObjectNode(this);
         return objectNode;
     }
 

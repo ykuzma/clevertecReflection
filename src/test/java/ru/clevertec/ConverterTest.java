@@ -11,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.clevertec.core.AbstractContainer;
-import ru.clevertec.core.ContainerBuilder;
 import ru.clevertec.core.Parser2;
 import ru.clevertec.core.node.NodeFactory;
 import ru.clevertec.core.service.deserialization.NodeConverterFactory;
@@ -27,6 +26,7 @@ import ru.clevertec.util.TestHelper;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,14 +41,36 @@ class ConverterTest {
     Converter converter;
 
     public ConverterTest() {
+
         converter = new Converter(new Parser2(new NodeFactory(), new StringCleanerImpl()),
-                new NodeConverterFactory(), new NodeFactory(), new ConverterFactoryImpl(), new ContainerBuilder<>());
+                new NodeConverterFactory(), new NodeFactory(), new ConverterFactoryImpl());
+
         helper = new TestHelper();
         objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules()
                 .setDateFormat(new StdDateFormat())
                 .disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
 
+    }
+
+    @Test
+    void shouldMappingListInList() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException, JsonProcessingException {
+
+        //given
+        EasyRandom easyRandom = new EasyRandom();
+        UuidFlower uuidFlower = easyRandom.nextObject(UuidFlower.class);
+        List<UuidFlower> list = new ArrayList<>();
+        List<List<UuidFlower>> list2 = new ArrayList<>();
+        list.add(uuidFlower);
+        list2.add(list);
+        String s = converter.mappingDomainToJson(list2);
+        List<List<UuidFlower>> expected = objectMapper.readValue(s, new TypeReference<>() {
+        });
+        //when
+        List<List<UuidFlower>> actual = converter.mappingJsonToDomain(s, new AbstractContainer<>() {
+        });
+        //then
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -62,6 +84,7 @@ class ConverterTest {
         //then
         assertThat(actual).isEqualTo(expected);
     }
+
 
     @Test
     void shouldMappingCustomerToJson() throws IOException, IllegalAccessException {
@@ -95,6 +118,7 @@ class ConverterTest {
                 Arguments.of(UuidFlower.class, new TestHelper().getUuidJsonAsString())
         );
     }
+
     @Test
     void shouldMappingJsonToTimeFlower() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
@@ -106,6 +130,7 @@ class ConverterTest {
         //then
         assertThat(timeFlowerActual).isEqualTo(timeFlowerExpected);
     }
+
     @Test
     void shouldMappingJsonToInnerFlower() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
@@ -117,6 +142,7 @@ class ConverterTest {
         //then
         assertThat(innerFlowerActual).isEqualTo(innerFlowerExpected);
     }
+
     @Test
     void shouldMappingJsonToSet() throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
@@ -131,13 +157,15 @@ class ConverterTest {
         //then
         assertThat(actual).isEqualTo(expected);
     }
+
     @Test
-    void shouldMappingJsonToMap() throws IllegalAccessException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException {
+    void shouldMappingJsonToMap() throws IllegalAccessException, IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException{
         //given
         Map<String, UUID> expected = objectMapper.readValue(helper.getMapJsonAsString(),
                 new TypeReference<>() {
                 });
-        AbstractContainer<Map<String, UUID>> container = new AbstractContainer<>() {};
+        AbstractContainer<Map<String, UUID>> container = new AbstractContainer<>() {
+        };
         //when
         Map<String, UUID> actual = converter.mappingJsonToDomain(helper.getMapJsonAsString(), container);
         //then
@@ -154,6 +182,7 @@ class ConverterTest {
         //then
         assertThat(actual).isEqualTo(expected);
     }
+
     @Test
     void shouldMappingDomainToString() throws IllegalAccessException, JsonProcessingException {
 
