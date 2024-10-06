@@ -22,7 +22,7 @@ public class JsonParserImpl implements JsonParser {
     @Override
     public Node parse(char start, char[] json) {
         int indexStartElement = 0;
-        Node parent = nodeFactory.create(start);
+        Node parent = nodeFactory.getInstance(start);
         Node child = null;
         for (int i = 0; i < json.length; i++) {
             if ((json[i] == ARRAY_START || json[i] == OBJECT_START) && countQuote % 2 == 0) {

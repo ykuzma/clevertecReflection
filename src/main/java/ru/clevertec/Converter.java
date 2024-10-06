@@ -35,18 +35,19 @@ public class Converter {
                 .build();
         return jsonToDomain(json, containerData);
     }
+    private <T> T jsonToDomain(String json, ContainerData<T> containerData) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+        Node parentNode = nodeFactory.getInstance(json.charAt(0));
+        parser.parse(parentNode, json.toCharArray());
+        NodeConverter nodeConverter = nodeConverterFactory.getNodeConverter(parentNode, containerData);
+        return  nodeConverter.convert(parentNode, containerData);
+    }
 
     public String mappingDomainToJson(Object object) throws IllegalAccessException {
         ConverterToJson converter = converterFactory.getConverter(object);
         return converter.convertToJson(object).toString();
     }
 
-    private <T> T jsonToDomain(String json, ContainerData<T> containerData) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-        Node parse = nodeFactory.create(json.charAt(0));
-        parser.parse(parse, json.toCharArray());
-        NodeConverter nodeConverter = nodeConverterFactory.getNodeConverter(parse, containerData);
-        return  nodeConverter.convert(parse, containerData);
-    }
+
 
     private <T> Class<T> getContainerClass(AbstractContainer<T> container) {
         ParameterizedType type = (ParameterizedType) container.getType();

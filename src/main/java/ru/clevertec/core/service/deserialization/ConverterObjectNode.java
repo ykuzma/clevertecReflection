@@ -6,7 +6,6 @@ import ru.clevertec.core.ContainerData;
 import ru.clevertec.core.node.Node;
 import ru.clevertec.core.node.ObjectNode;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
@@ -18,27 +17,27 @@ public class ConverterObjectNode implements NodeConverter {
 
 
     @Override
-    public <T> T convert(Node node, ContainerData<T> container) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-        Class<T> object = container.getContainerClass();
-        ObjectNode objectNode = (ObjectNode) node;
-        Map<String, Node> nodeFields = objectNode.getFields();
-        Constructor<T> constructor = object.getConstructor();
-        T t = constructor.newInstance();
-        Field[] fields = object.getDeclaredFields();
+    public <T> T convert(Node node, ContainerData<T> container) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException {
+        Class<T> clazz = container.getContainerClass();
+        T t = clazz.getConstructor().newInstance();
+        Map<String, Node> nodeFields = ((ObjectNode) node).getFields();
 
-        for (Field field: fields) {
+        for (Field field: clazz.getDeclaredFields()) {
             field.setAccessible(true);
-            Node node1 = nodeFields.get(field.getName());
-            Class<?> type = field.getType();
-            ContainerData<?> containerData = new ContainerData.ContainerBuilder<>(type)
-                    .setTypeElementInContainer(field.getGenericType())
-                    .build();
-            NodeConverter nodeConverter = factory.getNodeConverter(node1, containerData);
-            Object fieldValue = nodeConverter.convert(node1, containerData);
+            Object fieldValue = getFieldValue(nodeFields.get(field.getName()), field);
             field.set(t, fieldValue);
         }
         return t;
     }
 
+    private Object getFieldValue(Node node, Field field) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+
+        ContainerData<?> containerData = new ContainerData.ContainerBuilder<>(field.getType())
+                .setTypeElementInContainer(field.getGenericType())
+                .build();
+        NodeConverter nodeConverter = factory.getNodeConverter(node, containerData);
+
+        return nodeConverter.convert(node, containerData);
+    }
 
 }

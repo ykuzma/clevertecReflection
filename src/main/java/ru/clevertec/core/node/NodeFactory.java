@@ -2,7 +2,7 @@ package ru.clevertec.core.node;
 
 public class NodeFactory {
 
-    public Node create(char bit) {
+    public Node getInstance(char bit) {
 
         return switch (bit) {
             case '{' -> new ObjectNode();

@@ -31,7 +31,7 @@ public class Parser2 implements JsonParser2{
         while (index < json.length) {
 
             if ((json[index] == ARRAY_START || json[index] == OBJECT_START) && countQuote % 2 == 0) {
-                child = nodeFactory.create(json[index]);
+                child = nodeFactory.getInstance(json[index]);
                 index = parse(child, json, index + 1);
             } else if ((json[index] == ARRAY_END || json[index] == OBJECT_END) && countQuote % 2 == 0) {
                 addElementInNode(parent, child, Arrays.copyOfRange(json, startElement, index));
