@@ -3,7 +3,7 @@ package ru.clevertec;
 import lombok.AllArgsConstructor;
 import ru.clevertec.core.AbstractContainer;
 import ru.clevertec.core.ContainerData;
-import ru.clevertec.core.JsonParser2;
+import ru.clevertec.core.parser.JsonParser2;
 import ru.clevertec.core.node.Node;
 import ru.clevertec.core.node.NodeFactory;
 import ru.clevertec.core.service.deserialization.NodeConverter;

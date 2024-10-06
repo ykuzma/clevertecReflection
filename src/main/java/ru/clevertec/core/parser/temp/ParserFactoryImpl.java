@@ -1,4 +1,4 @@
-package ru.clevertec.core;
+package ru.clevertec.core.parser.temp;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

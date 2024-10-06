@@ -1,11 +1,10 @@
 package ru.clevertec.core;
 
 import org.junit.jupiter.api.Test;
+import ru.clevertec.core.parser.temp.ReplacerComma;
 import ru.clevertec.util.TestHelper;
 
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ReplacerCommaTest {
 

@@ -1,9 +1,13 @@
 package ru.clevertec.core;
 
 import org.junit.jupiter.api.Test;
+import ru.clevertec.core.parser.temp.ParserArray;
+import ru.clevertec.core.parser.temp.ParserFactory;
+import ru.clevertec.core.parser.temp.ParserFactoryImpl;
+import ru.clevertec.core.parser.temp.ParserJson;
+import ru.clevertec.core.parser.temp.ParserOneLineObject;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ParserFactoryImplTest {
 

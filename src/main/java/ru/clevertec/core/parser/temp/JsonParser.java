@@ -1,8 +1,8 @@
-package ru.clevertec.core;
+package ru.clevertec.core.parser.temp;
 
 import ru.clevertec.core.node.Node;
 
-public interface JsonParser2 {
+public interface JsonParser {
     char ARRAY_START = '[';
     char ARRAY_END = ']';
     char OBJECT_START = '{';
@@ -11,7 +11,5 @@ public interface JsonParser2 {
     char COMMA = ',';
     char BACKSLASH = '\\';
 
-    int parse(Node node, char[] json, int start);
-    int parse(Node node, char[] json);
-
+    Node parse(char start, char[]json);
 }

@@ -1,6 +1,4 @@
-package ru.clevertec.core;
-
-import ru.clevertec.core.node.Node;
+package ru.clevertec.core.parser.temp;
 
 public interface ParserFactory {
 

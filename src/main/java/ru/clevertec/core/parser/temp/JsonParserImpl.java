@@ -1,53 +1,48 @@
-package ru.clevertec.core;
+package ru.clevertec.core.parser.temp;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import ru.clevertec.core.node.ArrayNode;
 import ru.clevertec.core.node.Node;
 import ru.clevertec.core.node.NodeFactory;
 import ru.clevertec.core.node.ObjectNode;
 import ru.clevertec.core.node.ValueNode;
+import ru.clevertec.core.parser.temp.JsonParser;
 import ru.clevertec.util.StringCleaner;
 
 import java.util.Arrays;
 
-@NoArgsConstructor
-@AllArgsConstructor
-public class Parser2 implements JsonParser2{
-    private NodeFactory nodeFactory;
-    private StringCleaner stringCleaner;
+@RequiredArgsConstructor
+public class JsonParserImpl implements JsonParser {
+
+    private final StringCleaner stringCleaner;
+    private final NodeFactory nodeFactory;
+    private int countQuote = 0;
+    private int offset = 0;
+
 
     @Override
-    public int parse(Node node, char[] json) {
-        return parse(node, json, 1);
-    }
-
-    @Override
-    public int parse(Node parent, char[] json, int start) {
-        int index = start;
-        int countQuote = 0;
-        int startElement = start;
+    public Node parse(char start, char[] json) {
+        int indexStartElement = 0;
+        Node parent = nodeFactory.getInstance(start);
         Node child = null;
-        while (index < json.length) {
-
-            if ((json[index] == ARRAY_START || json[index] == OBJECT_START) && countQuote % 2 == 0) {
-                child = nodeFactory.getInstance(json[index]);
-                index = parse(child, json, index + 1);
-            } else if ((json[index] == ARRAY_END || json[index] == OBJECT_END) && countQuote % 2 == 0) {
-                addElementInNode(parent, child, Arrays.copyOfRange(json, startElement, index));
-                return index;
-            } else if (json[index] == COMMA && countQuote % 2 == 0) {
-                addElementInNode(parent, child, Arrays.copyOfRange(json, startElement, index));
+        for (int i = 0; i < json.length; i++) {
+            if ((json[i] == ARRAY_START || json[i] == OBJECT_START) && countQuote % 2 == 0) {
+                child = parse(json[i], Arrays.copyOfRange(json, i + 1, json.length));
+                i += offset;
+            } else if ((json[i] == ARRAY_END || json[i] == OBJECT_END) && countQuote % 2 == 0) {
+                addElementInNode(parent, child, Arrays.copyOfRange(json, indexStartElement, i));
+                offset = i + 1;
+                return parent;
+            } else if (json[i] == COMMA && countQuote % 2 == 0) {
+                addElementInNode(parent, child, Arrays.copyOfRange(json, indexStartElement, i));
                 child = null;
-                startElement = index + 1;
-            } else if (json[index] == QUOTES && (String.valueOf(json).codePointBefore(index) != BACKSLASH)) {
+                indexStartElement = i + 1;
+            } else if (json[i] == QUOTES && (i == 0 || String.valueOf(json).codePointBefore(i) != BACKSLASH)) {
                 countQuote++;
             }
-            index++;
         }
-        return index;
+        return parent;
     }
-
 
     private void addElementInNode(Node parent, Node child, char[] field) {
         if (parent.isArray()) {
@@ -80,7 +75,7 @@ public class Parser2 implements JsonParser2{
             ValueNode valueNode = new ValueNode();
             valueNode.setValue(stringCleaner.clean(split[1]));
             ((ObjectNode) parent).getFields().put(key, valueNode);
-        } else {
+        } else if (parent.isObject()) {
             ((ObjectNode) parent).getFields().put(key, child);
         }
 
