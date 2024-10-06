@@ -2,7 +2,6 @@ package ru.clevertec.core.service.deserialization;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import ru.clevertec.core.ContainerCreator;
 import ru.clevertec.core.ContainerData;
 import ru.clevertec.core.node.Node;
 import ru.clevertec.core.node.ObjectNode;
@@ -16,7 +15,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class ConverterObjectNode implements NodeConverter {
     private NodeConverterFactory factory;
-    private ContainerCreator containerCreator;
+
 
     @Override
     public <T> T convert(Node node, ContainerData<T> container) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -31,7 +30,9 @@ public class ConverterObjectNode implements NodeConverter {
             field.setAccessible(true);
             Node node1 = nodeFields.get(field.getName());
             Class<?> type = field.getType();
-            ContainerData<?> containerData = containerCreator.create(type, field.getGenericType());
+            ContainerData<?> containerData = new ContainerData.ContainerBuilder<>(type)
+                    .setTypeElementInContainer(field.getGenericType())
+                    .build();
             NodeConverter nodeConverter = factory.getNodeConverter(node1, containerData);
             Object fieldValue = nodeConverter.convert(node1, containerData);
             field.set(t, fieldValue);

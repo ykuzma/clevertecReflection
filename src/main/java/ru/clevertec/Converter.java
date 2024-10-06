@@ -2,7 +2,6 @@ package ru.clevertec;
 
 import lombok.AllArgsConstructor;
 import ru.clevertec.core.AbstractContainer;
-import ru.clevertec.core.ContainerCreator;
 import ru.clevertec.core.ContainerData;
 import ru.clevertec.core.service.deserialization.NodeConverter;
 import ru.clevertec.core.service.deserialization.NodeConverterFactory;
@@ -22,12 +21,12 @@ public class Converter {
     private final NodeConverterFactory nodeConverterFactory;
 
      private final ConverterFactory converterFactory;
-     private final ContainerCreator containerCreator;
+
 
     public <T> T mappingJsonToDomain(String json, Class<T> clazz) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         String substring = json.substring(1);
         Node parse = parser.parse(json.charAt(0), substring.toCharArray());
-        ContainerData<T> containerData = containerCreator.create(clazz, null);
+        ContainerData<T> containerData = new ContainerData.ContainerBuilder<>(clazz).build();
         NodeConverter nodeConverter = nodeConverterFactory.getNodeConverter(parse, containerData);
         return nodeConverter.convert(parse, containerData);
     }
@@ -35,16 +34,17 @@ public class Converter {
     public <T> T mappingJsonToDomain(String json, AbstractContainer<T> container) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         String substring = json.substring(1);
         Node parse = parser.parse(json.charAt(0), substring.toCharArray());
-        ContainerData<T> containerData = containerCreator.create(getContainerClass(container), container.getType());
+        ContainerData<T> containerData =  new ContainerData.ContainerBuilder<>(getContainerClass(container))
+                .setTypeElementInContainer(container.getType())
+                .build();
         NodeConverter nodeConverter = nodeConverterFactory.getNodeConverter(parse, containerData);
-        return nodeConverter.convert(parse, containerData);
+        return  nodeConverter.convert(parse, containerData);
     }
 
-    private <T> Class<T> getContainerClass(AbstractContainer<T> container) throws ClassNotFoundException {
+    private <T> Class<T> getContainerClass(AbstractContainer<T> container) {
         ParameterizedType type = (ParameterizedType) container.getType();
-        String typeName = type.getRawType().getTypeName();
 
-        return (Class<T>) Class.forName(typeName);
+        return (Class<T>) type.getRawType();
     }
 
     public String mappingDomainToJson(Object object) throws IllegalAccessException {

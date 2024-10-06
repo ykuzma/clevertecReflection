@@ -2,13 +2,13 @@ package ru.clevertec.core.service.deserialization;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import ru.clevertec.core.ContainerCreator;
 import ru.clevertec.core.ContainerData;
 import ru.clevertec.core.node.Node;
 import ru.clevertec.core.node.ObjectNode;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.Map;
 
 @NoArgsConstructor
@@ -16,7 +16,7 @@ import java.util.Map;
 public class ConverterMapNode implements NodeConverter{
 
     private NodeConverterFactory factory;
-    private ContainerCreator containerCreator;
+
 
     @Override
     public <T> T convert(Node node, ContainerData<T> containerData) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -28,9 +28,12 @@ public class ConverterMapNode implements NodeConverter{
         ObjectNode objectNode = (ObjectNode) node;
         for (Map.Entry<String, Node> n : objectNode.getFields().entrySet()) {
             Node nodeValue = n.getValue();
+            Type type = containerData.getTypeElementInContainer()[1];
             Object key = parseValue(n.getKey(), (Class<?>) containerData.getTypeElementInContainer()[0]);
-            ContainerData<?> containerData1 = containerCreator.create((Class<?>) containerData.getTypeElementInContainer()[1],
-                    containerData.getTypeElementInContainer()[1]);
+            ContainerData<?> containerData1 = new ContainerData.ContainerBuilder<>(
+                    ContainerData.ContainerBuilder.extractGenericClass(type))
+                    .setTypeElementInContainer(type)
+                    .build();
             NodeConverter nodeConverter = factory.getNodeConverter(nodeValue, containerData1);
             Object value = nodeConverter.convert(nodeValue, containerData1);
 
