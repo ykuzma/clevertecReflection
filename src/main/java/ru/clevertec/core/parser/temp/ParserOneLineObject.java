@@ -4,7 +4,7 @@ import ru.clevertec.core.node.Node;
 
 public class ParserOneLineObject implements ParserJson{
     @Override
-    public Node parse(String Json) {
+    public Node parse(String json) {
         return null;
     }
 }

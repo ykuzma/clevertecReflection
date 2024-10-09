@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import ru.clevertec.core.AbstractContainer;
 import ru.clevertec.core.parser.Parser2;
 import ru.clevertec.core.node.NodeFactory;
+import ru.clevertec.core.parser.temp.ParserFactoryImpl;
 import ru.clevertec.core.service.deserialization.NodeConverterFactory;
 import ru.clevertec.core.service.serialization.ConverterFactoryImpl;
 import ru.clevertec.domain.Customer;
@@ -42,8 +43,8 @@ class ConverterTest {
 
     public ConverterTest() {
 
-        converter = new Converter(new Parser2(new NodeFactory(), new StringCleanerImpl()),
-                new NodeConverterFactory(), new NodeFactory(), new ConverterFactoryImpl());
+        converter = new Converter(new ParserFactoryImpl(),
+                new NodeConverterFactory(), new ConverterFactoryImpl());
 
         helper = new TestHelper();
         objectMapper = new ObjectMapper();

@@ -19,9 +19,9 @@ public class ParserFactoryImpl implements ParserFactory {
             return getParserArray();
         } else if (json.matches("^\\{.*\\}$")) {
             return getParserObject();
-        } else if (json.matches("\".*[^\\(\\\\)]\"\\s*:\\s*.")) {
+        } else if (json.matches("\".*[^\\(\\\\)]\"\\s*:\\s*.+")) {
             return getOneLineObject();
-        } else if (json.matches("\".*\" | true | false | null | \\d+ | \\d+\\.\\d+")){
+        } else if (json.matches("(\".*\")|true|false|null|(\\d+)|(\\d+\\.\\d+)")){
             return getParserValue();
         }
 

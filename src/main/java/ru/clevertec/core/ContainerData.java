@@ -3,6 +3,7 @@ package ru.clevertec.core;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.clevertec.exception.DeserializationException;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -26,9 +27,7 @@ public class ContainerData<T> {
 
     public static class ContainerBuilder<T> {
 
-
         private Class<T> containerClass;
-
         private Type[] typeElementInContainer;
         private Method addInContainer;
         private Class<?> containerClassImpl;
@@ -38,13 +37,16 @@ public class ContainerData<T> {
         }
 
 
-        public static Class<?> extractGenericClass(Type type) throws ClassNotFoundException {
+        public static Class<?> extractGenericClass(Type type) {
             Class<?> clazz;
-            if (type instanceof ParameterizedType parameterizedType) {
-
-                clazz = Class.forName(parameterizedType.getRawType().getTypeName());
-            } else {
-                clazz = Class.forName(type.getTypeName());
+            try {
+                if (type instanceof ParameterizedType parameterizedType) {
+                    clazz = Class.forName(parameterizedType.getRawType().getTypeName());
+                } else {
+                    clazz = Class.forName(type.getTypeName());
+                }
+            } catch (ClassNotFoundException e) {
+                throw new DeserializationException(e.getMessage(), e);
             }
             return clazz;
         }
@@ -63,9 +65,12 @@ public class ContainerData<T> {
             return this;
         }
 
-
-        public ContainerData<T> build() throws NoSuchMethodException {
-            getImplementation(containerClass);
+        public ContainerData<T> build() {
+            try {
+                getImplementation(containerClass);
+            } catch (NoSuchMethodException e) {
+                throw new DeserializationException(e.getMessage(), e);
+            }
             return new ContainerData<>(containerClass, typeElementInContainer, addInContainer, containerClassImpl);
         }
 

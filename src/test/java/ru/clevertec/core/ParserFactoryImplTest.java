@@ -6,6 +6,7 @@ import ru.clevertec.core.parser.temp.ParserFactory;
 import ru.clevertec.core.parser.temp.ParserFactoryImpl;
 import ru.clevertec.core.parser.temp.ParserJson;
 import ru.clevertec.core.parser.temp.ParserOneLineObject;
+import ru.clevertec.core.parser.temp.ParserValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,5 +38,16 @@ class ParserFactoryImplTest {
         ParserJson parser = parserFactory.getParser(json);
         //then
         assertThat(parser).isInstanceOf(ParserOneLineObject.class);
+    }
+
+    @Test
+    void shouldGetParserValue() {
+        //given
+        String json = "2";
+
+        //when
+        ParserJson parser = parserFactory.getParser(json);
+        //then
+        assertThat(parser).isInstanceOf(ParserValue.class);
     }
 }

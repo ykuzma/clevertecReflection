@@ -23,9 +23,8 @@ public class ConverterMapNode implements NodeConverter {
         T map = containerClass.cast(implementation.getConstructor().newInstance());
         Method addInMap = containerData.getAddInContainer();
 
-        ObjectNode parentNode = (ObjectNode) node;
-        for (Map.Entry<String, Node> innerNode : parentNode.getFields().entrySet()) {
-            Class<?> keyClass  = (Class<?>)containerData.getTypeElementInContainer()[0];
+        for (Map.Entry<String, Node> innerNode : ((ObjectNode) node).fields()) {
+            Class<?> keyClass = (Class<?>) containerData.getTypeElementInContainer()[0];
             Object key = parseValue(innerNode.getKey(), keyClass);
             Type typeValue = containerData.getTypeElementInContainer()[1];
             Object value = getValue(typeValue, innerNode.getValue());

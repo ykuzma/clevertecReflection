@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @NoArgsConstructor
-public class ConverterFactoryImpl implements ConverterFactory{
+public class ConverterFactoryImpl implements ConverterFactory {
     private ConverterObject converterObject;
     private ConverterObjectAsString converterObjectAsString;
     private ConverterCollection converterCollection;
@@ -23,7 +23,7 @@ public class ConverterFactoryImpl implements ConverterFactory{
 
     private static final List<Class<?>> CLASS_WITH_QUOTES = List.of(String.class, UUID.class,
             OffsetDateTime.class, LocalDate.class, LocalDateTime.class
-            );
+    );
     private static final List<Class<?>> CLASS_WITHOUT_QUOTES = List.of(Integer.class, Double.class, Long.class,
             Float.class, Boolean.class, BigDecimal.class, BigInteger.class);
 
