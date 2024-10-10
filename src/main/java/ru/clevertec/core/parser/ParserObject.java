@@ -1,9 +1,10 @@
-package ru.clevertec.core.parser.temp;
+package ru.clevertec.core.parser;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import ru.clevertec.core.node.Node;
 import ru.clevertec.core.node.ObjectNode;
+import ru.clevertec.util.ReplacerComma;
 import ru.clevertec.util.StringCleanerImpl;
 
 @NoArgsConstructor

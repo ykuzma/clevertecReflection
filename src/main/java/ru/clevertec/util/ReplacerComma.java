@@ -1,4 +1,4 @@
-package ru.clevertec.core.parser.temp;
+package ru.clevertec.util;
 
 import java.util.UUID;
 

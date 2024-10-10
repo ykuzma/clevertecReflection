@@ -1,4 +1,4 @@
-package ru.clevertec.core.parser.temp;
+package ru.clevertec.core.parser;
 
 import ru.clevertec.core.node.Node;
 

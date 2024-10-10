@@ -1,7 +1,8 @@
-package ru.clevertec.core.parser.temp;
+package ru.clevertec.core.parser;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import ru.clevertec.util.ReplacerComma;
 
 @NoArgsConstructor
 @AllArgsConstructor

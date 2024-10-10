@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import ru.clevertec.core.AbstractContainer;
 import ru.clevertec.core.ContainerData;
 import ru.clevertec.core.node.Node;
-import ru.clevertec.core.parser.temp.ParserFactory;
+import ru.clevertec.core.parser.ParserFactory;
 import ru.clevertec.core.service.deserialization.NodeConverter;
 import ru.clevertec.core.service.deserialization.NodeConverterFactory;
 import ru.clevertec.core.service.serialization.ConverterFactory;
