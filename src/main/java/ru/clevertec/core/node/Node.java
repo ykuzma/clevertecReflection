@@ -1,11 +1,7 @@
 package ru.clevertec.core.node;
 
 public abstract class Node {
-    protected NodeType nodeType;
-
-    protected Node() {
-
-    }
+    protected final NodeType nodeType;
 
     protected Node(NodeType type) {
         nodeType = type;

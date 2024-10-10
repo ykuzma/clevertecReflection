@@ -23,7 +23,7 @@ public class ConverterCollection implements ConverterToJson{
             sb.append(value)
                     .append(COMMA);
         }
-        sb.replace(sb.lastIndexOf(","), sb.length(), "]");
+        sb.replace(sb.lastIndexOf(COMMA), sb.length(), ARRAY_END);
         return sb;
     }
 }
