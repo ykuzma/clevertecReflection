@@ -44,7 +44,7 @@ public class ParserFactoryImpl implements ParserFactory {
     }
 
     private ParserJson getParserArray() {
-        if (parserArray == null) parserArray = new ParserArray();
+        if (parserArray == null) parserArray = new ParserArray(new ReplacerComma(), this);
         return parserArray;
     }
 }
