@@ -1,17 +1,20 @@
-package ru.clevertec.core;
+package ru.clevertec.core.node;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ValueNode extends Node{
+public class ValueNode extends Node {
 
     private String value;
 
-    public ValueNode(){
+    public ValueNode() {
         super(NodeType.VALUE);
     }
+
+
+
+
 
 }

@@ -1,0 +1,39 @@
+[{"id":2,"commonName":"Hetch, Hetchy Monkeyflower","plantFamily":"Scrophulariaceae","waterConsumptionPerDay":5.0,"shadePreferred":false,"origin":"Central African Republic","price":100,"flowerVaseMaterial":["Granite","Plexiglass","Aluminum","Steel","Granite","Granite","Plastic"]},
+  {"id":3,"commonName":"Yellow, Pond-lily","plantFamily":"Nymphaeaceae","waterConsumptionPerDay":1.0,"shadePreferred":false,"origin":"Central African Republic","price":100,"flowerVaseMaterial":["Wood","Wood","Glass","Wood","Granite","Aluminum","Plastic"]},
+  {"id":4,"commonName":"Napali Kona Peperomia","plantFamily":"Piperaceae","waterConsumptionPerDay":10.0,"shadePreferred":true,"origin":"Central African Republic","price":100,"flowerVaseMaterial":["Stone","Aluminum","Plexiglass","Plastic","Wood","Wood","Granite"]},
+
+  {"id":4,"commonName":"Napali Kona Peperomia","plantFamily":"Piperaceae","waterConsumptionPerDay":10.0,"shadePreferred":true,"origin":"Central African Republic","price":100,"flowerVaseMaterial":["Stone","Aluminum","Plexiglass","Plastic","Wood","Wood","Granite"]},
+  {"id":2,"commonName":"Hetch Hetchy Monkeyflower","plantFamily":"Scrophulariaceae","waterConsumptionPerDay":5.0,"shadePreferred":false,"origin":"Central African Republic","price":100,"flowerVaseMaterial":["Granite","Plexiglass","Aluminum","Steel","Granite","Granite","Plastic"]},
+  {"id":3,"commonName":"Yellow Pond-lily","plantFamily":"Nymphaeaceae","waterConsumptionPerDay":1.0,"shadePreferred":false,"origin":"Central African Republic","price":100,"flowerVaseMaterial":["Wood","Wood","Glass","Wood","Granite","Aluminum","Plastic"]},
+
+  {"id":8,"commonName":"Vernal Pool Indian Paintbrush","plantFamily":"Scrophulariaceae","waterConsumptionPerDay":5.0,"shadePreferred":false,"origin":"Central African Republic","price":581,"flowerVaseMaterial":["Steel","Steel","Plexiglass","Glass","Wood","Glass","Rubber"]},
+  {"id":9,"commonName":"Meadow Brome","plantFamily":"Poaceae","waterConsumptionPerDay":5.0,"shadePreferred":true,"origin":"Central African Republic","price":144,"flowerVaseMaterial":["Plastic","Rubber","Stone","Rubber","Glass","Stone","Aluminum"]},
+  {"id":10,"commonName":"Long-scape Iris","plantFamily":"Iridaceae","waterConsumptionPerDay":5.0,"shadePreferred":true,"origin":"Central African Republic","price":968,"flowerVaseMaterial":["Plexiglass","Rubber","Stone","Granite","Brass","Granite","Granite"]},
+
+  {"id":9,"commonName":"Meadow Brome","plantFamily":"Poaceae","waterConsumptionPerDay":5.0,"shadePreferred":true,"origin":"Central African Republic","price":144,"flowerVaseMaterial":["Plastic","Rubber","Stone","Rubber","Glass","Stone","Aluminum"]},
+  {"id":8,"commonName":"Vernal Pool Indian Paintbrush","plantFamily":"Scrophulariaceae","waterConsumptionPerDay":5.0,"shadePreferred":false,"origin":"Central African Republic","price":581,"flowerVaseMaterial":["Steel","Steel","Plexiglass","Glass","Wood","Glass","Rubber"]},
+  {"id":10,"commonName":"Long-scape Iris","plantFamily":"Iridaceae","waterConsumptionPerDay":5.0,"shadePreferred":true,"origin":"Central African Republic","price":968,"flowerVaseMaterial":["Plexiglass","Rubber","Stone","Granite","Brass","Granite","Granite"]},
+
+  {"id":14,"commonName":"British Felt Lichen","plantFamily":"Peltigeraceae","waterConsumptionPerDay":1.0,"shadePreferred":true,"origin":"Peru","price":300,"flowerVaseMaterial":["Plastic","Aluminum","Vinyl","Aluminum","Plexiglass","Brass","Plastic"]},
+  {"id":15,"commonName":"Himalayan Honeysuckle","plantFamily":"Caprifoliaceae","waterConsumptionPerDay":1.0,"shadePreferred":false,"origin":"Albania","price":300,"flowerVaseMaterial":["Brass","Wood","Brass","Aluminum","Steel","Steel","Vinyl"]},
+  {"id":16,"commonName":"Kauai Starviolet","plantFamily":"Rubiaceae","waterConsumptionPerDay":1.0,"shadePreferred":false,"origin":"Belarus","price":300,"flowerVaseMaterial":["Glass","Plastic","Brass","Aluminum","Steel","Brass","Aluminum"]},
+
+  {"id":14,"commonName":"British Felt Lichen","plantFamily":"Peltigeraceae","waterConsumptionPerDay":1.0,"shadePreferred":true,"origin":"Peru","price":300,"flowerVaseMaterial":["Plastic","Aluminum","Vinyl","Aluminum","Plexiglass","Brass","Plastic"]},
+  {"id":16,"commonName":"Kauai Starviolet","plantFamily":"Rubiaceae","waterConsumptionPerDay":1.0,"shadePreferred":false,"origin":"Belarus","price":300,"flowerVaseMaterial":["Glass","Plastic","Brass","Aluminum","Steel","Brass","Aluminum"]},
+  {"id":15,"commonName":"Himalayan Honeysuckle","plantFamily":"Caprifoliaceae","waterConsumptionPerDay":1.0,"shadePreferred":false,"origin":"Albania","price":300,"flowerVaseMaterial":["Brass","Wood","Brass","Aluminum","Steel","Steel","Vinyl"]},
+
+  {"id":20,"commonName":"Aeartleaf Foamflower","plantFamily":"Saxifragaceae","waterConsumptionPerDay":5.14,"shadePreferred":true,"origin":"Central African Republic","price":618,"flowerVaseMaterial":["Plexiglass","Steel","Wood","Brass","Steel","Aluminum","Plexiglass"]},
+  {"id":21,"commonName":"Aollyfern","plantFamily":"Dryopteridaceae","waterConsumptionPerDay":2.82,"shadePreferred":false,"origin":"Central African Republic","price":1885,"flowerVaseMaterial":["Glass","Plexiglass","Glass","Rubber","Rubber","Rubber","Plastic"]},
+  {"id":22,"commonName":"Butchins' Ulota Moss","plantFamily":"Orthotrichaceae","waterConsumptionPerDay":2.55,"shadePreferred":false,"origin":"Central African Republic","price":1196,"flowerVaseMaterial":["Vinyl","Stone","Steel","Steel","Plexiglass","Steel","Steel"]},
+
+  {"id":23,"commonName":"Xaroonspot Calicoflower","plantFamily":"Campanulaceae","waterConsumptionPerDay":6.28,"shadePreferred":false,"origin":"Central African Republic","price":1332,"flowerVaseMaterial":["Plastic","Wood","Wood","Brass","Glass","Granite","Aluminum"]},
+  {"id":24,"commonName":"forthern Sweetvetch","plantFamily":"Fabaceae","waterConsumptionPerDay":0.08,"shadePreferred":false,"origin":"Central African Republic","price":427,"flowerVaseMaterial":["Rubber","Aluminum","Stone","Rubber","Plexiglass","Brass","Granite"]},
+  {"id":25,"commonName":"Zncense Cedar","plantFamily":"Cupressaceae","waterConsumptionPerDay":3.52,"shadePreferred":false,"origin":"Central African Republic","price":380,"flowerVaseMaterial":["Vinyl","Aluminum","Stone","Brass","Aluminum","Rubber","Glass"]},
+
+  {"id":26,"commonName":"Chihuahuan Stickseed","plantFamily":"Boraginaceae","waterConsumptionPerDay":3.43,"shadePreferred":false,"origin":"Central African Republic","price":737,"flowerVaseMaterial":["Plastic","Rubber","Plexiglass","Vinyl","Vinyl","Stone","Stone"]},
+  {"id":27,"commonName":"Common Candle Snuffer Moss","plantFamily":"Encalyptaceae","waterConsumptionPerDay":0.32,"shadePreferred":false,"origin":"Central African Republic","price":1579,"flowerVaseMaterial":["Rubber","Aluminum","Plexiglass","Brass","Brass","Aluminum","Vinyl"]},
+  {"id":28,"commonName":"Orange Lichen","plantFamily":"Teloschistaceae","waterConsumptionPerDay":0.49,"shadePreferred":false,"origin":"Central African Republic","price":1612,"flowerVaseMaterial":["Granite","Rubber","Granite","Aluminum","Glass","Plastic","Steel"]},
+
+  {"id":29,"commonName":"Dlack Ambret","plantFamily":"Fabaceae","waterConsumptionPerDay":6.4,"shadePreferred":true,"origin":"Central African Republic","price":451,"flowerVaseMaterial":["Wood","Vinyl","Vinyl","Plastic","Wood","Wood","Rubber"]},
+  {"id":30,"commonName":"Gellow Penstemon","plantFamily":"Scrophulariaceae","waterConsumptionPerDay":3.7,"shadePreferred":true,"origin":"Central African Republic","price":182,"flowerVaseMaterial":["Stone","Plexiglass","Plastic","Stone"]},
+  {"id":31,"commonName":"Hrichoramalina Lichen","plantFamily":"Ramalinaceae","waterConsumptionPerDay":0.65,"shadePreferred":true,"origin":"Central African Republic","price":1223,"flowerVaseMaterial":["Granite","Granite","Vinyl","Brass","Plexiglass"]}]
